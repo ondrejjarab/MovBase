@@ -1,3 +1,5 @@
+<%@page import="javax.persistence.EntityManager"%>
+<%@page import="sk.movbase.models.Film"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.List"%>
 <%@page import="sk.movbase.models.User"%>
@@ -19,7 +21,25 @@
     </head>
 
     <body>
-        <p>Ahoj</p>
+        <p> 
+            
+            <%     
+             EntityManagerFactory emf = Persistence.createEntityManagerFactory("MovBasePU");//to co je uvedene v persistence.xml
+             UserTransaction t = (UserTransaction) new InitialContext().lookup("java:comp/UserTransaction");
+             UserJpaController uJpa = new UserJpaController(emf);
+        //     EntityManager em = emf.createEntityManager();
+      //       em.getTransaction().begin();
+    //         em.persist(new User(96, "abcd", "abcd@gmail.com", new Date()));
+  //           em.getTransaction().commit();
+             uJpa.create(new User(131, "abcd", "abcd@gmail.com", new Date()));  
+             UserJpaController uJ = new UserJpaController(emf);
+             List<User> u = uJ.findUserEntities(); 
+                          System.out.println("ahoj");  
+             
+                          System.out.println(u);  
+
+             //user.setPohlavie(null);
+        %></p>
         
     </body>
 </html>

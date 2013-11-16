@@ -27,11 +27,9 @@ import sk.movbase.models.User;
  */
 public class CommentJpaController implements Serializable {
 
-    public CommentJpaController(UserTransaction utx, EntityManagerFactory emf) {
-        this.utx = utx;
+    public CommentJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    private UserTransaction utx = null;
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
@@ -41,8 +39,8 @@ public class CommentJpaController implements Serializable {
     public void create(Comment comment) throws RollbackFailureException, Exception {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             Film filmId = comment.getFilmId();
             if (filmId != null) {
                 filmId = em.getReference(filmId.getClass(), filmId.getFilmId());
@@ -62,13 +60,8 @@ public class CommentJpaController implements Serializable {
                 autorId.getCommentCollection().add(comment);
                 autorId = em.merge(autorId);
             }
-            utx.commit();
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
             throw ex;
         } finally {
             if (em != null) {
@@ -80,8 +73,8 @@ public class CommentJpaController implements Serializable {
     public void edit(Comment comment) throws NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             Comment persistentComment = em.find(Comment.class, comment.getKomentarId());
             Film filmIdOld = persistentComment.getFilmId();
             Film filmIdNew = comment.getFilmId();
@@ -112,13 +105,8 @@ public class CommentJpaController implements Serializable {
                 autorIdNew.getCommentCollection().add(comment);
                 autorIdNew = em.merge(autorIdNew);
             }
-            utx.commit();
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
                 Integer id = comment.getKomentarId();
@@ -137,8 +125,8 @@ public class CommentJpaController implements Serializable {
     public void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             Comment comment;
             try {
                 comment = em.getReference(Comment.class, id);
@@ -157,13 +145,8 @@ public class CommentJpaController implements Serializable {
                 autorId = em.merge(autorId);
             }
             em.remove(comment);
-            utx.commit();
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
             throw ex;
         } finally {
             if (em != null) {

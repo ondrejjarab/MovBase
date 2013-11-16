@@ -75,12 +75,7 @@ public class Country implements Serializable {
     public Country() {
     }
 
-    public Country(Short krajinaId) {
-        this.krajinaId = krajinaId;
-    }
-
-    public Country(Short krajinaId, Date datumPridania, String nazov, String schvaleny) {
-        this.krajinaId = krajinaId;
+    public Country(Date datumPridania, String nazov, String schvaleny) {
         this.datumPridania = datumPridania;
         this.nazov = nazov;
         this.schvaleny = schvaleny;

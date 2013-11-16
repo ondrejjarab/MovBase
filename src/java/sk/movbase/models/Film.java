@@ -120,12 +120,7 @@ public class Film implements Serializable {
     public Film() {
     }
 
-    public Film(Integer filmId) {
-        this.filmId = filmId;
-    }
-
-    public Film(Integer filmId, Date datumPridania, String typ, String nazov, String popis, String schvaleny) {
-        this.filmId = filmId;
+    public Film(Date datumPridania, String typ, String nazov, String popis, String schvaleny) {
         this.datumPridania = datumPridania;
         this.typ = typ;
         this.nazov = nazov;

@@ -72,11 +72,7 @@ public class Genre implements Serializable {
     public Genre() {
     }
 
-    public Genre(Short zanerId) {
-        this.zanerId = zanerId;
-    }
-
-    public Genre(Short zanerId, Date datumPridania, String nazov, String schvaleny) {
+    public Genre(Date datumPridania, String nazov, String schvaleny) {
         this.zanerId = zanerId;
         this.datumPridania = datumPridania;
         this.nazov = nazov;

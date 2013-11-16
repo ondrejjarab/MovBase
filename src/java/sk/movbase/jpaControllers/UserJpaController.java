@@ -33,11 +33,9 @@ import sk.movbase.models.User;
  */
 public class UserJpaController implements Serializable {
 
-    public UserJpaController(UserTransaction utx, EntityManagerFactory emf) {
-        this.utx = utx;
+    public UserJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    private UserTransaction utx = null;
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
@@ -62,8 +60,8 @@ public class UserJpaController implements Serializable {
         }
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             Collection<Film> attachedFilmCollection = new ArrayList<Film>();
             for (Film filmCollectionFilmToAttach : user.getFilmCollection()) {
                 filmCollectionFilmToAttach = em.getReference(filmCollectionFilmToAttach.getClass(), filmCollectionFilmToAttach.getFilmId());
@@ -140,13 +138,9 @@ public class UserJpaController implements Serializable {
                     oldAutorIdOfGenreCollectionGenre = em.merge(oldAutorIdOfGenreCollectionGenre);
                 }
             }
-            utx.commit();
+                em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
+            
             throw ex;
         } finally {
             if (em != null) {
@@ -158,8 +152,8 @@ public class UserJpaController implements Serializable {
     public void edit(User user) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             User persistentUser = em.find(User.class, user.getPouzivatelId());
             Collection<Film> filmCollectionOld = persistentUser.getFilmCollection();
             Collection<Film> filmCollectionNew = user.getFilmCollection();
@@ -306,13 +300,9 @@ public class UserJpaController implements Serializable {
                     }
                 }
             }
-            utx.commit();
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
+            
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
                 Integer id = user.getPouzivatelId();
@@ -331,8 +321,8 @@ public class UserJpaController implements Serializable {
     public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             User user;
             try {
                 user = em.getReference(User.class, id);
@@ -380,13 +370,8 @@ public class UserJpaController implements Serializable {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
             em.remove(user);
-            utx.commit();
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
             throw ex;
         } finally {
             if (em != null) {

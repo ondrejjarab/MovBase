@@ -31,11 +31,9 @@ import sk.movbase.models.People;
  */
 public class PeopleJpaController implements Serializable {
 
-    public PeopleJpaController(UserTransaction utx, EntityManagerFactory emf) {
-        this.utx = utx;
+    public PeopleJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    private UserTransaction utx = null;
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
@@ -48,8 +46,8 @@ public class PeopleJpaController implements Serializable {
         }
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             Country narodnost = people.getNarodnost();
             if (narodnost != null) {
                 narodnost = em.getReference(narodnost.getClass(), narodnost.getKrajinaId());
@@ -88,13 +86,8 @@ public class PeopleJpaController implements Serializable {
                 filmCollectionFilm.getPeopleCollection().add(people);
                 filmCollectionFilm = em.merge(filmCollectionFilm);
             }
-            utx.commit();
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
             throw ex;
         } finally {
             if (em != null) {
@@ -106,8 +99,8 @@ public class PeopleJpaController implements Serializable {
     public void edit(People people) throws NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             People persistentPeople = em.find(People.class, people.getOsobnostId());
             Country narodnostOld = persistentPeople.getNarodnost();
             Country narodnostNew = people.getNarodnost();
@@ -173,13 +166,8 @@ public class PeopleJpaController implements Serializable {
                     filmCollectionNewFilm = em.merge(filmCollectionNewFilm);
                 }
             }
-            utx.commit();
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
                 Integer id = people.getOsobnostId();
@@ -198,8 +186,8 @@ public class PeopleJpaController implements Serializable {
     public void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             People people;
             try {
                 people = em.getReference(People.class, id);
@@ -228,13 +216,8 @@ public class PeopleJpaController implements Serializable {
                 filmCollectionFilm = em.merge(filmCollectionFilm);
             }
             em.remove(people);
-            utx.commit();
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
             throw ex;
         } finally {
             if (em != null) {

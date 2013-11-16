@@ -30,11 +30,9 @@ import sk.movbase.models.People;
  */
 public class CountryJpaController implements Serializable {
 
-    public CountryJpaController(UserTransaction utx, EntityManagerFactory emf) {
-        this.utx = utx;
+    public CountryJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    private UserTransaction utx = null;
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
@@ -50,8 +48,8 @@ public class CountryJpaController implements Serializable {
         }
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             User autorId = country.getAutorId();
             if (autorId != null) {
                 autorId = em.getReference(autorId.getClass(), autorId.getPouzivatelId());
@@ -87,13 +85,8 @@ public class CountryJpaController implements Serializable {
                     oldNarodnostOfPeopleCollectionPeople = em.merge(oldNarodnostOfPeopleCollectionPeople);
                 }
             }
-            utx.commit();
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
             throw ex;
         } finally {
             if (em != null) {
@@ -105,8 +98,8 @@ public class CountryJpaController implements Serializable {
     public void edit(Country country) throws NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             Country persistentCountry = em.find(Country.class, country.getKrajinaId());
             User autorIdOld = persistentCountry.getAutorId();
             User autorIdNew = country.getAutorId();
@@ -170,13 +163,8 @@ public class CountryJpaController implements Serializable {
                     }
                 }
             }
-            utx.commit();
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
                 Short id = country.getKrajinaId();
@@ -195,8 +183,8 @@ public class CountryJpaController implements Serializable {
     public void destroy(Short id) throws NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             Country country;
             try {
                 country = em.getReference(Country.class, id);
@@ -220,13 +208,8 @@ public class CountryJpaController implements Serializable {
                 peopleCollectionPeople = em.merge(peopleCollectionPeople);
             }
             em.remove(country);
-            utx.commit();
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
             throw ex;
         } finally {
             if (em != null) {

@@ -89,12 +89,7 @@ public class People implements Serializable {
     public People() {
     }
 
-    public People(Integer osobnostId) {
-        this.osobnostId = osobnostId;
-    }
-
-    public People(Integer osobnostId, Date datumPridania, String meno, String popis, String schvaleny) {
-        this.osobnostId = osobnostId;
+    public People(Date datumPridania, String meno, String popis, String schvaleny) {
         this.datumPridania = datumPridania;
         this.meno = meno;
         this.popis = popis;

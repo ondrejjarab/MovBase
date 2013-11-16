@@ -29,11 +29,9 @@ import sk.movbase.models.Profession;
  */
 public class ProfessionJpaController implements Serializable {
 
-    public ProfessionJpaController(UserTransaction utx, EntityManagerFactory emf) {
-        this.utx = utx;
+    public ProfessionJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    private UserTransaction utx = null;
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
@@ -46,8 +44,8 @@ public class ProfessionJpaController implements Serializable {
         }
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             Collection<People> attachedPeopleCollection = new ArrayList<People>();
             for (People peopleCollectionPeopleToAttach : profession.getPeopleCollection()) {
                 peopleCollectionPeopleToAttach = em.getReference(peopleCollectionPeopleToAttach.getClass(), peopleCollectionPeopleToAttach.getOsobnostId());
@@ -64,13 +62,8 @@ public class ProfessionJpaController implements Serializable {
                     oldTypOfPeopleCollectionPeople = em.merge(oldTypOfPeopleCollectionPeople);
                 }
             }
-            utx.commit();
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
             throw ex;
         } finally {
             if (em != null) {
@@ -82,8 +75,8 @@ public class ProfessionJpaController implements Serializable {
     public void edit(Profession profession) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             Profession persistentProfession = em.find(Profession.class, profession.getProfesiaId());
             Collection<People> peopleCollectionOld = persistentProfession.getPeopleCollection();
             Collection<People> peopleCollectionNew = profession.getPeopleCollection();
@@ -118,13 +111,8 @@ public class ProfessionJpaController implements Serializable {
                     }
                 }
             }
-            utx.commit();
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
                 Short id = profession.getProfesiaId();
@@ -143,8 +131,8 @@ public class ProfessionJpaController implements Serializable {
     public void destroy(Short id) throws IllegalOrphanException, NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             Profession profession;
             try {
                 profession = em.getReference(Profession.class, id);
@@ -164,13 +152,8 @@ public class ProfessionJpaController implements Serializable {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
             em.remove(profession);
-            utx.commit();
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
             throw ex;
         } finally {
             if (em != null) {

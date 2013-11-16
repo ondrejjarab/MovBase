@@ -29,11 +29,9 @@ import sk.movbase.models.Genre;
  */
 public class GenreJpaController implements Serializable {
 
-    public GenreJpaController(UserTransaction utx, EntityManagerFactory emf) {
-        this.utx = utx;
+    public GenreJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    private UserTransaction utx = null;
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
@@ -46,8 +44,8 @@ public class GenreJpaController implements Serializable {
         }
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             User autorId = genre.getAutorId();
             if (autorId != null) {
                 autorId = em.getReference(autorId.getClass(), autorId.getPouzivatelId());
@@ -68,13 +66,8 @@ public class GenreJpaController implements Serializable {
                 filmCollectionFilm.getGenreCollection().add(genre);
                 filmCollectionFilm = em.merge(filmCollectionFilm);
             }
-            utx.commit();
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
             throw ex;
         } finally {
             if (em != null) {
@@ -86,8 +79,8 @@ public class GenreJpaController implements Serializable {
     public void edit(Genre genre) throws NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             Genre persistentGenre = em.find(Genre.class, genre.getZanerId());
             User autorIdOld = persistentGenre.getAutorId();
             User autorIdNew = genre.getAutorId();
@@ -125,13 +118,8 @@ public class GenreJpaController implements Serializable {
                     filmCollectionNewFilm = em.merge(filmCollectionNewFilm);
                 }
             }
-            utx.commit();
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
                 Short id = genre.getZanerId();
@@ -150,8 +138,8 @@ public class GenreJpaController implements Serializable {
     public void destroy(Short id) throws NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             Genre genre;
             try {
                 genre = em.getReference(Genre.class, id);
@@ -170,13 +158,8 @@ public class GenreJpaController implements Serializable {
                 filmCollectionFilm = em.merge(filmCollectionFilm);
             }
             em.remove(genre);
-            utx.commit();
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
             throw ex;
         } finally {
             if (em != null) {

@@ -90,8 +90,7 @@ public class User implements Serializable {
         this.pouzivatelId = pouzivatelId;
     }
 
-    public User(Integer pouzivatelId, long fbId, String meno, String email, Date datumRegistracie) {
-        this.pouzivatelId = pouzivatelId;
+    public User(long fbId, String meno, String email, Date datumRegistracie) {
         this.fbId = fbId;
         this.meno = meno;
         this.email = email;

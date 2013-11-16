@@ -66,12 +66,7 @@ public class Comment implements Serializable {
     public Comment() {
     }
 
-    public Comment(Integer komentarId) {
-        this.komentarId = komentarId;
-    }
-
-    public Comment(Integer komentarId, Date datumPridania) {
-        this.komentarId = komentarId;
+    public Comment(Date datumPridania) {
         this.datumPridania = datumPridania;
     }
 

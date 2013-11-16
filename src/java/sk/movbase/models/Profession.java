@@ -53,11 +53,7 @@ public class Profession implements Serializable {
     public Profession() {
     }
 
-    public Profession(Short profesiaId) {
-        this.profesiaId = profesiaId;
-    }
-
-    public Profession(Short profesiaId, String nazov) {
+    public Profession(String nazov) {
         this.profesiaId = profesiaId;
         this.nazov = nazov;
     }
