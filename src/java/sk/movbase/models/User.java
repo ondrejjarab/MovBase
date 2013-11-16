@@ -86,15 +86,12 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(Integer pouzivatelId) {
-        this.pouzivatelId = pouzivatelId;
-    }
 
     public User(long fbId, String meno, String email, Date datumRegistracie) {
         this.fbId = fbId;
         this.meno = meno;
         this.email = email;
-        this.datumRegistracie = datumRegistracie;
+        this.datumRegistracie = datumRegistracie; 
     }
 
     public Integer getPouzivatelId() {
@@ -214,5 +211,7 @@ public class User implements Serializable {
     public String toString() {
         return "sk.movbase.models.User[ pouzivatelId=" + pouzivatelId + " ]";
     }
+    
+   
     
 }

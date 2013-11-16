@@ -62,6 +62,7 @@ public class Comment implements Serializable {
     @JoinColumn(name = "autor_id", referencedColumnName = "pouzivatel_id")
     @ManyToOne(optional = false)
     private User autorId;
+    
 
     public Comment() {
     }
@@ -116,7 +117,7 @@ public class Comment implements Serializable {
 
     public void setAutorId(User autorId) {
         this.autorId = autorId;
-    }
+    }   
 
     @Override
     public int hashCode() {
