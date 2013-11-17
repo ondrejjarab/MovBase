@@ -30,6 +30,7 @@ import sk.movbase.models.Genre;
 public class GenreJpaController implements Serializable {
 
     public GenreJpaController(EntityManagerFactory emf) {
+        emf.getCache().evictAll();
         this.emf = emf;
     }
     private EntityManagerFactory emf = null;

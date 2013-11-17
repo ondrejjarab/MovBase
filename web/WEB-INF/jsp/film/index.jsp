@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="sk.movbase.jpaControllers.CommentJpaController"%>
 <%@page import="sk.movbase.models.Comment"%>
 <%@page import="javax.persistence.EntityManager"%>
@@ -24,8 +25,12 @@
 
     <body>
         <p> 
-            
-            </p>
+            ahoj ${films}             </p>
+
+            <c:forEach var="i" items="${films}">
+            <p>${i.meno}</p>
+                
+            </c:forEach>
         
     </body>
 </html>

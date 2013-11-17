@@ -34,6 +34,7 @@ import sk.movbase.models.User;
 public class UserJpaController implements Serializable {
 
     public UserJpaController(EntityManagerFactory emf) {
+        emf.getCache().evictAll();
         this.emf = emf;
     }
     private EntityManagerFactory emf = null;

@@ -34,6 +34,7 @@ import sk.movbase.models.Film;
 public class FilmJpaController implements Serializable {
 
     public FilmJpaController(EntityManagerFactory emf) {
+        emf.getCache().evictAll();
         this.emf = emf;
     }
     private EntityManagerFactory emf = null;

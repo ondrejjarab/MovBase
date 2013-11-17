@@ -29,4 +29,6 @@
     <property name="persistenceUnitName" value="MovBasePU"></property>
 </bean>
 
+
+
 </beans>

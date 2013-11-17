@@ -30,6 +30,7 @@ import sk.movbase.models.Profession;
 public class ProfessionJpaController implements Serializable {
 
     public ProfessionJpaController(EntityManagerFactory emf) {
+        emf.getCache().evictAll();
         this.emf = emf;
     }
     private EntityManagerFactory emf = null;

@@ -28,6 +28,7 @@ import sk.movbase.models.User;
 public class CommentJpaController implements Serializable {
 
     public CommentJpaController(EntityManagerFactory emf) {
+        emf.getCache().evictAll();
         this.emf = emf;
     }
     private EntityManagerFactory emf = null;
