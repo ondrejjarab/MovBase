@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import sk.movbase.jpaControllers.FilmJpaController;
 import sk.movbase.models.Comment;
 
@@ -24,6 +25,7 @@ import sk.movbase.models.Comment;
 @RequestMapping("/movie/{id}/comments")          //komentare pre film/serial s id ...
 public class CommentController {
     
+    @RequestMapping(method = RequestMethod.GET)
     public String allComments(@PathVariable int movieId, ModelMap model) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MovBasePU");
         FilmJpaController fJpa = new FilmJpaController(emf);
@@ -32,19 +34,22 @@ public class CommentController {
         return "comment/index";
     }
     
+    @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newComment() {
        
     return "comment/new";
 }
-    
+    @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public String edit() {
         return "comment/edit";
     }
     
+    @RequestMapping(method = RequestMethod.POST)
     public String create(@PathVariable int movieId) {
         return null;
     }
     
+    @RequestMapping(method = RequestMethod.PUT)
     public String update(@PathVariable int movieId) {
         return null;
     }

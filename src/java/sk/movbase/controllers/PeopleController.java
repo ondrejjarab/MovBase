@@ -24,6 +24,7 @@ import sk.movbase.models.User;
 @RequestMapping("/people")
 public class PeopleController {
     
+    @RequestMapping(method = RequestMethod.GET)
     public String index(ModelMap model) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MovBasePU");
         UserJpaController uJpa = new UserJpaController(emf);

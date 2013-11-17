@@ -6,22 +6,14 @@
 
 package sk.movbase.controllers;
 
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import org.springframework.orm.jpa.EntityManagerFactoryPlus;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import sk.movbase.jpaControllers.FilmJpaController;
-import sk.movbase.jpaControllers.UserJpaController;
-import sk.movbase.jpaControllers.exceptions.NonexistentEntityException;
-import sk.movbase.jpaControllers.exceptions.RollbackFailureException;
 import sk.movbase.models.Film;
 
 /**

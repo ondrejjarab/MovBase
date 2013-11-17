@@ -25,10 +25,10 @@
 
     <body>
         <p> 
-            ahoj ${films}             </p>
+            ahoj ${movies}             </p>
 
-            <c:forEach var="i" items="${films}">
-            <p>${i.meno}</p>
+            <c:forEach var="i" items="${movies}">
+            <p>${i.nazov}</p>
                 
             </c:forEach>
         
