@@ -13,6 +13,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import sk.movbase.constants.PhotoSize;
 import sk.movbase.jpaControllers.FilmJpaController;
 import sk.movbase.models.Film;
 
@@ -38,6 +39,8 @@ public class FilmController {
         FilmJpaController fJpa = new FilmJpaController(emf);
         Film film = fJpa.findFilm(id);
         model.addAttribute("movie", film); 
+		model.addAttribute("smallPhoto", PhotoSize.SMALL);
+		model.addAttribute("bigPhoto", PhotoSize.BIG);
         return "film/show"; 
     }
 }

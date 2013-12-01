@@ -1,0 +1,32 @@
+@charset "UTF-8";
+
+.center { text-align: center; }
+
+body {
+  text-align: center;
+  font-family: 'HelveticaNeueLTPro-Roman', Arial, sans-serif;
+  font-size: 12px;
+  color: #92929d;
+  margin: 0;
+  line-height: 18px;
+  background: #121229;
+}
+
+img {
+	border: none;
+}
+
+
+a { color: #a72222; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+#holder {
+    position: relative;
+    text-align: left;
+    margin: 30px auto;
+    width: 800px;
+}
+
+.movie_photo {
+	width: 230px;
+}

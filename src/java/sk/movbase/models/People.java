@@ -176,6 +176,11 @@ public class People implements Serializable {
     public void setAutorId(User autorId) {
         this.autorId = autorId;
     }
+	
+	public String getProfileURL() {
+		// TODO: vratit odkaz na profil
+		return "#";
+	}
 
     @Override
     public int hashCode() {

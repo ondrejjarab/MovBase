@@ -7,8 +7,10 @@
 package sk.movbase.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -31,6 +33,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import sk.movbase.constants.PhotoSize;
 
 /**
  *
@@ -169,8 +172,20 @@ public class Film implements Serializable {
     }
 
     public String getFotografia() {
+		// v nazve musi mat defaultne "_small"
         return fotografia;
     }
+	
+	public String getFotografia(String size) {
+		if(this.getFotografia()==null) return null;
+		return this.getFotografia().replace("_small", "_"+size);
+    }
+	
+	public String getPhotoURL(String size) {
+		if(this.getFotografia(size)==null)
+			return "/resources/movie_photos/default_"+size+".png";
+		return "/resources/movie_photos/"+this.getFilmId()+"/"+this.getFotografia(size);
+	}
 
     public void setFotografia(String fotografia) {
         this.fotografia = fotografia;
@@ -259,6 +274,36 @@ public class Film implements Serializable {
     public void setCommentCollection(Collection<Comment> commentCollection) {
         this.commentCollection = commentCollection;
     }
+	
+	public String getRating() {
+		// TODO: hodnotenie v slovnom tvare
+		return "zatiaľ bez hodnotenia";
+	}
+	
+	public String getDescription() {
+		// TODO: upravit aby sa zobrazil iba prvych X znakov a po kliknuti na "čítať celé" sa zobrazi cele
+		return this.getPopis();
+	}
+	
+	public People getDirector() {
+		// TODO: zistit rezisera a vratit jeho objekt
+		return null;
+	}
+	
+	public List<People> getActors() {
+		return this.getActors(-1);
+	}
+	
+	/**
+	 * Vrati objekty hercov
+	 * @param number pocet hercov ktory sa ma vratit, -1 pre vsetkych
+	 * @return 
+	 */
+	public List<People> getActors(int number) {
+		// TODO: vratit zoznam vsetkych hercov a incyh povolani typu People ktory na filme pracovali
+		List<People> zoznam = new ArrayList<>();
+		return zoznam;
+	}
 
     @Override
     public int hashCode() {
