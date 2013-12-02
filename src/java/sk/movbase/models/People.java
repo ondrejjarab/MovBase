@@ -7,8 +7,10 @@
 package sk.movbase.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -121,8 +123,20 @@ public class People implements Serializable {
     }
 
     public String getFotografia() {
+		// v nazve musi mat defaultne "_small"
         return fotografia;
     }
+	
+	public String getFotografia(String size) {
+		if(this.getFotografia()==null) return null;
+		return this.getFotografia().replace("_small", "_"+size);
+    }
+	
+	public String getPhotoURL(String size) {
+		if(this.getFotografia(size)==null)
+			return "/resources/person_photos/default_"+size+".png";
+		return "/resources/person_photos/"+this.getOsobnostId()+"/"+this.getFotografia(size);
+	}
 
     public void setFotografia(String fotografia) {
         this.fotografia = fotografia;
@@ -178,8 +192,38 @@ public class People implements Serializable {
     }
 	
 	public String getProfileURL() {
-		// TODO: vratit odkaz na profil
-		return "#";
+		return "/people/"+this.getOsobnostId()+".htm";
+	}
+	
+	public String getDescription(int beginIndex) {
+		try { return this.getPopis().substring(beginIndex); }
+		catch(Exception ex) { return this.getPopis(); }
+	}
+	
+	public String getDescription(int beginIndex, int endIndex) {
+		try { return this.getPopis().substring(beginIndex, endIndex); }
+		catch(Exception ex) { return this.getPopis(); }
+	}
+	
+	public List<Film> getMovies() {
+		return this.getMovies(-1);
+	}
+	
+	/**
+	 * Vrati zoznam vsetkych filmov kde sa herec zucastnil
+	 * @param number pocet filmov ktory sa ma vratit, -1 pre vsetkych
+	 * @return 
+	 */
+	public List<Film> getMovies(int number) {
+		if(number==-1) return new ArrayList<>(this.getFilmCollection());
+		List<Film> zoznam = new ArrayList<>();
+		int i = 0;
+		for(Film movie : this.getFilmCollection()) {
+			if(i>=number)
+				break;
+			zoznam.add(movie);
+		}
+		return zoznam;
 	}
 
     @Override

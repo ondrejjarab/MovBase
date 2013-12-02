@@ -1,6 +1,7 @@
 @charset "UTF-8";
 
 .center { text-align: center; }
+.invisible { display: none; }
 
 body {
   text-align: center;
@@ -27,6 +28,255 @@ a:hover { text-decoration: underline; }
     width: 800px;
 }
 
+/* @group INDEX */
+
+/* @group ANIMÁCIA */
+
+#main_animation {
+	position: relative;
+	margin: 30px 0 0 45px;
+}
+
+#main_animation .animate {
+	position: absolute;
+	top: 8px;
+	left: 9px;
+	width: 250px;
+}
+
+#main_animation #animation_controller {
+	position: absolute;
+	top: 8px;
+	left: 260px;
+}
+
+#main_animation #animation_controller .controller_unit {
+	height: 74px;
+	margin-bottom: 5px;
+	font-size: 22px;
+	line-height: 26px;
+}
+
+#main_animation #animation_controller .controller_unit.animation_controller_active {
+	color: #fff;
+}
+
+
+/* @end */
+
+
+/* @end */
+
+/* @group DETAIL FILMU */
+
+/* @group ĽAVÝ STĹPEC */
+
+.left_col {
+	float: left;
+	margin: 30px 20px 40px 0;
+	width: 230px;
+}
+
 .movie_photo {
 	width: 230px;
 }
+
+#rating_box_graphic_background, #rating_box_graphic_foreground {
+  position: absolute;
+  top: 9px;
+  left: 0;
+  height: 19px;
+}
+
+#rating_box_graphic_background {
+  background-image: url('/resources/img/rating_empty.png');
+  width: 119px;
+}
+
+#rating_box_graphic_foreground {
+  background-image: url('/resources/img/rating_full.png');
+  width: 0;
+}
+
+/* @end */
+
+/* @group PRAVÝ STĹPEC */
+
+.right_col {
+	float: left;
+	margin: 30px 0 40px 0;
+	width: 550px;
+}
+
+.right_col h2 {
+	text-transform: uppercase;
+	margin: 0;
+	padding: 5px 0 0 0;
+	font-size: 22px;
+	font-weight: normal;
+}
+
+.subtitle {
+	margin: 0;
+	padding: 0 0 20px 0;
+	font-size: 16px;
+}
+
+.description {
+	font-size: 14px;
+	margin: 0;
+	padding: 0 0 20px 0;
+}
+
+.director {
+	font-size: 16px;
+}
+.director a {
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+.actors_and_stuff {
+	
+}
+.actors_and_stuff h3 {
+	font-size: 16px;
+	font-weight: normal;
+	margin: 0;
+	padding: 0 0 10px 0;
+}
+
+.actor_microlayout {
+	float: left;
+	width: 100px;
+	margin-right: 10px;
+	text-align: center;
+}
+
+.actor_microlayout img {
+	width: 50px;
+	margin-bottom: 5px;
+}
+
+#rating_box_graphic {
+  position: relative;
+  padding: 0;
+  margin: 0 0 0 55px;
+  width: 119px;
+  height: 19px;
+}
+
+
+
+/* @end */
+
+/* @group KOMENTÁRE */
+
+.comments {
+	clear: both;
+	border: 1px solid #fff;
+	margin: 20px 40px;
+}
+
+.comments h2 {
+	font-size: 16px;
+	padding: 10px;
+	margin: 0;
+}
+
+/* @end */
+
+/* @end */
+
+/* @group LIGHTBOX styly */
+
+#jquery-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 90;
+    width: 100%;
+    height: 500px;
+}
+#jquery-lightbox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    text-align: center;
+    line-height: 0;
+}
+#jquery-lightbox a img { border: none; }
+#lightbox-container-image-box {
+    position: relative;
+    background-color: #fff;
+    width: 250px;
+    height: 250px;
+    margin: 0 auto;
+}
+#lightbox-container-image { padding: 10px; }
+#lightbox-loading {
+    position: absolute;
+    top: 40%;
+    left: 0%;
+    height: 25%;
+    width: 100%;
+    text-align: center;
+    line-height: 0;
+}
+#lightbox-nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 10;
+}
+#lightbox-container-image-box > #lightbox-nav { left: 0; }
+#lightbox-nav a { outline: none;}
+#lightbox-nav-btnPrev, #lightbox-nav-btnNext {
+    width: 49%;
+    height: 100%;
+    zoom: 1;
+    display: block;
+}
+#lightbox-nav-btnPrev {
+    left: 0;
+    float: left;
+}
+#lightbox-nav-btnNext {
+    right: 0;
+    float: right;
+}
+#lightbox-container-image-data-box {
+    font: 10px Verdana, Helvetica, sans-serif;
+    background-color: #fff;
+    margin: 0 auto;
+    line-height: 1.4em;
+    overflow: auto;
+    width: 100%;
+    padding: 0 10px 0;
+}
+#lightbox-container-image-data {
+    padding: 0 10px;
+    color: #666;
+}
+#lightbox-container-image-data #lightbox-image-details {
+    width: 70%;
+    float: left;
+    text-align: left;
+}
+#lightbox-image-details-caption { font-weight: bold; }
+#lightbox-image-details-currentNumber {
+    display: block;
+    clear: left;
+    padding-bottom: 1.0em;
+}
+#lightbox-secNav-btnClose {
+    width: 66px;
+    float: right;
+    padding-bottom: 0.7em;
+}
+
+/* @end */ 

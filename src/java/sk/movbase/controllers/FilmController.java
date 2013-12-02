@@ -39,8 +39,10 @@ public class FilmController {
         FilmJpaController fJpa = new FilmJpaController(emf);
         Film film = fJpa.findFilm(id);
         model.addAttribute("movie", film); 
+		model.addAttribute("tinyPhoto", PhotoSize.TINY);
 		model.addAttribute("smallPhoto", PhotoSize.SMALL);
 		model.addAttribute("bigPhoto", PhotoSize.BIG);
+		model.addAttribute("descriptionCharacters", 200);
         return "film/show"; 
     }
 }

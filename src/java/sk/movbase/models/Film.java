@@ -7,6 +7,7 @@
 package sk.movbase.models;
 
 import java.io.Serializable;
+import static java.lang.Math.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -275,18 +276,50 @@ public class Film implements Serializable {
         this.commentCollection = commentCollection;
     }
 	
-	public String getRating() {
+	public String getVerbalRating() {
 		// TODO: hodnotenie v slovnom tvare
 		return "zatiaľ bez hodnotenia";
 	}
 	
-	public String getDescription() {
-		// TODO: upravit aby sa zobrazil iba prvych X znakov a po kliknuti na "čítať celé" sa zobrazi cele
-		return this.getPopis();
+	public double getRating() {
+		// TODO: vratit priemerne hodnotenie filmu, ak este nebol hodnoteny, nulu
+		return 4.2;
+	}
+	
+	/**
+	 * Vypocita sirku naplnenia hviezdiciek podla hodnotenia 
+	 * @return sirka v px
+	 */
+	public int getGraphicRating() {
+		// sirka jedneho hodnotenia 19px, sirka medzery 6px
+		double rating = this.getRating();
+        int full_amount = (int)Math.floor(rating);
+        double unfull_amount = rating-full_amount;// za desatinnou ciarkou
+        int width = 25*full_amount+(int)Math.round(unfull_amount*19);
+        if(width>119) width=119;
+        if(width<0) width = 0;
+        return width;
+	}
+	
+	public String getProfileURL() {
+		return "/movies/"+this.getFilmId()+".htm";
+	}
+	
+	public String getDescription(int beginIndex) {
+		try { return this.getPopis().substring(beginIndex); }
+		catch(Exception ex) { return this.getPopis(); }
+	}
+	
+	public String getDescription(int beginIndex, int endIndex) {
+		try { return this.getPopis().substring(beginIndex, endIndex); }
+		catch(Exception ex) { return this.getPopis(); }
 	}
 	
 	public People getDirector() {
-		// TODO: zistit rezisera a vratit jeho objekt
+		for(People person : this.getPeopleCollection()) {
+			if(person.getTyp().getNazov().equals("Režisér"))
+				return person;
+		}
 		return null;
 	}
 	
@@ -295,13 +328,16 @@ public class Film implements Serializable {
 	}
 	
 	/**
-	 * Vrati objekty hercov
+	 * Vrati zoznam vsetkych hercov a incyh povolani typu People ktory na filme pracovali
 	 * @param number pocet hercov ktory sa ma vratit, -1 pre vsetkych
 	 * @return 
 	 */
 	public List<People> getActors(int number) {
-		// TODO: vratit zoznam vsetkych hercov a incyh povolani typu People ktory na filme pracovali
 		List<People> zoznam = new ArrayList<>();
+		for(People person : this.getPeopleCollection()) {
+			if(!person.getTyp().getNazov().equals("Režisér"))
+				zoznam.add(person);
+		}
 		return zoznam;
 	}
 

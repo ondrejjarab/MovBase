@@ -13,7 +13,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import sk.movbase.constants.PhotoSize;
+import sk.movbase.jpaControllers.PeopleJpaController;
 import sk.movbase.jpaControllers.UserJpaController;
+import sk.movbase.models.People;
 import sk.movbase.models.User;
 
 /**
@@ -35,9 +38,13 @@ public class PeopleController {
     @RequestMapping("{id}")
     public String show(@PathVariable int id, ModelMap model) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MovBasePU");
-        UserJpaController uJpa = new UserJpaController(emf);
-        User user = uJpa.findUser(id);
-        model.addAttribute("actor", user);
+        PeopleJpaController pJpa = new PeopleJpaController(emf);
+        People person = pJpa.findPeople(id);
+        model.addAttribute("actor", person);
+        model.addAttribute("tinyPhoto", PhotoSize.TINY);
+		model.addAttribute("smallPhoto", PhotoSize.SMALL);
+		model.addAttribute("bigPhoto", PhotoSize.BIG);
+		model.addAttribute("descriptionCharacters", 200);
         return "people/show";
     }
 
