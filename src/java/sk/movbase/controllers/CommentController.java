@@ -25,6 +25,7 @@ import sk.movbase.models.Comment;
 @RequestMapping("/movie/{id}/comments")          //komentare pre film/serial s id ...
 public class CommentController {
     
+    //vsetky komentare ku filmu
     @RequestMapping(method = RequestMethod.GET)
     public String allComments(@PathVariable int movieId, ModelMap model) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MovBasePU");
@@ -34,6 +35,8 @@ public class CommentController {
         return "comment/index";
     }
     
+    
+    //nic nerobi len zobrazi form
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newComment() {
        

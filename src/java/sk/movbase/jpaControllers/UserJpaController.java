@@ -398,6 +398,7 @@ public class UserJpaController implements Serializable {
             if (!all) {
                 q.setMaxResults(maxResults);
                 q.setFirstResult(firstResult);
+                
             }
             return q.getResultList();
         } finally {
@@ -411,6 +412,17 @@ public class UserJpaController implements Serializable {
             return em.find(User.class, id);
         } finally {
             em.close();
+        }
+    }
+    
+    public User findByFbId(long facebookId) {
+        EntityManager em = getEntityManager();
+        List<User> results= em.createNamedQuery("User.findByFbId").setParameter("fbId", facebookId).getResultList();
+        if (!results.isEmpty()) {
+            return results.get(0);
+        }
+        else {
+            return null;
         }
     }
 

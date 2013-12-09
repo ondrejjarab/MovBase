@@ -8,6 +8,7 @@ package sk.movbase.controllers;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,7 +35,7 @@ public class FilmController {
     }
     
     @RequestMapping("{id}")
-    public String show(@PathVariable int id, ModelMap model) {
+    public String show(@PathVariable int id, /**/HttpServletRequest request, /**/ModelMap model) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MovBasePU");
         FilmJpaController fJpa = new FilmJpaController(emf);
         Film film = fJpa.findFilm(id);
@@ -43,6 +44,9 @@ public class FilmController {
 		model.addAttribute("smallPhoto", PhotoSize.SMALL);
 		model.addAttribute("bigPhoto", PhotoSize.BIG);
 		model.addAttribute("descriptionCharacters", 200);
+                //////////////
+                model.addAttribute("session", request.getSession());
+                ///////////
         return "film/show"; 
     }
 }

@@ -14,7 +14,19 @@
 	<script type="text/javascript" src="/resources/js/scripts.js"></script>
 	<title>Movied.com - Not Just Another MOVIEDatabase</title>
   </head>
-    <body>
+  <body>
+      
+      <!-- toto pridal Ondrej pre testovacie ucely><---->
+        <c:if test="${user == null}">
+        <a href="/login">Sign In</a>
+        </c:if>
+        <c:if test="${user != null}">
+        <h2>${user.getMeno()}</h2>
+        <a href="/logout">Log out</a>
+        </c:if> 
+      
+      <!-- koniec><------------------->
+        
 		<div id="holder">
 			<p class="center"><img src="/resources/img/logo.png" alt="logo" /></p>
 			

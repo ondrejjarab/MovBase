@@ -57,6 +57,7 @@
 			</div>
 			<div class="comments">
 				<h2>Komentáre:</h2>
+                                                         
 				<c:choose>
 					<c:when test="${empty movie.getCommentCollection()}">
 						<p class="center">Zatiaľ neboli pridané žiadne komentáre.</p>
