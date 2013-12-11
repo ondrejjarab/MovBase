@@ -241,7 +241,7 @@ public class Film implements Serializable {
         this.genreCollection = genreCollection;
     }
 
-    @XmlTransient
+    //@XmlTransient
     public Collection<People> getPeopleCollection() {
         return peopleCollection;
     }

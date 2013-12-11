@@ -14,6 +14,6 @@ import org.glassfish.jersey.server.ResourceConfig;
  */
 public class Config extends ResourceConfig {
     public Config() {
-        packages(TestJersey.class.getPackage().toString());
+        packages("sk.movbase.restservices");
     }
 }

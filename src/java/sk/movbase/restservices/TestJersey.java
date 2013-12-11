@@ -26,7 +26,6 @@ public class TestJersey {
     @Path("/test")
     @Produces(MediaType.TEXT_PLAIN)
     public String getText() {
-        System.out.println("test");
         return "Toto je Jersey test.";
     }
     
