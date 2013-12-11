@@ -415,11 +415,16 @@ public class UserJpaController implements Serializable {
         }
     }
     
+    /**
+     * najde pouzivatela podla FB ID 
+     * @param facebookId
+     * @return 
+     */
     public User findByFbId(long facebookId) {
         EntityManager em = getEntityManager();
         List<User> results= em.createNamedQuery("User.findByFbId").setParameter("fbId", facebookId).getResultList();
         if (!results.isEmpty()) {
-            return results.get(0);
+            return results.get(0);//ak niekoho naslo vrati prvu polozku 
         }
         else {
             return null;

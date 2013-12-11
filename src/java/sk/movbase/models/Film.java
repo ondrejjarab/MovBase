@@ -32,6 +32,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import sk.movbase.constants.PhotoSize;
@@ -132,6 +133,7 @@ public class Film implements Serializable {
         this.schvaleny = schvaleny;
     }
 
+    @XmlTransient
     public Integer getFilmId() {
         return filmId;
     }
@@ -140,6 +142,7 @@ public class Film implements Serializable {
         this.filmId = filmId;
     }
 
+    @XmlTransient
     public Date getDatumPridania() {
         return datumPridania;
     }
@@ -177,6 +180,7 @@ public class Film implements Serializable {
         return fotografia;
     }
 	
+    //@XmlTransient
 	public String getFotografia(String size) {
 		if(this.getFotografia()==null) return null;
 		return this.getFotografia().replace("_small", "_"+size);
@@ -216,6 +220,7 @@ public class Film implements Serializable {
         this.minutaz = minutaz;
     }
 
+    @XmlTransient
     public String getSchvaleny() {
         return schvaleny;
     }
@@ -232,7 +237,7 @@ public class Film implements Serializable {
         this.pocetCasti = pocetCasti;
     }
 
-    @XmlTransient
+    @XmlElement(name = "zaner")
     public Collection<Genre> getGenreCollection() {
         return genreCollection;
     }
@@ -241,7 +246,7 @@ public class Film implements Serializable {
         this.genreCollection = genreCollection;
     }
 
-    //@XmlTransient
+    @XmlElement(name = "Osobnosť")
     public Collection<People> getPeopleCollection() {
         return peopleCollection;
     }
@@ -250,7 +255,7 @@ public class Film implements Serializable {
         this.peopleCollection = peopleCollection;
     }
 
-    @XmlTransient
+    @XmlElement(name = "krajina pôvodu")
     public Collection<Country> getCountryCollection() {
         return countryCollection;
     }
@@ -259,8 +264,11 @@ public class Film implements Serializable {
         this.countryCollection = countryCollection;
     }
 
+    
+    @XmlTransient
     public User getAutorId() {
         return autorId;
+        
     }
 
     public void setAutorId(User autorId) {
