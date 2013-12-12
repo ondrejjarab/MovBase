@@ -20,6 +20,7 @@ import javax.ws.rs.core.MediaType;
 import org.springframework.stereotype.Component;
 import sk.movbase.jpaControllers.FilmJpaController;
 import sk.movbase.models.Film;
+import sk.movbase.restservicesexceptions.EntityNotFoundException;
 
 /**
  *
@@ -35,16 +36,19 @@ public class FilmResource {
     @Produces(MediaType.APPLICATION_XML)
     public Film getMovie(HttpServletResponse response, @PathParam("id") String id) {
         Film movie = null;
+        int filmId;
+        
+        try {
+            filmId = Integer.parseInt(id);
+        } catch(NumberFormatException ex) {
+            throw new EntityNotFoundException("Film", id);
+        }
+        
         FilmJpaController fJpa = new FilmJpaController(Persistence.createEntityManagerFactory("MovBasePU"));
         movie = fJpa.findFilm(Integer.parseInt(id));
         if (movie == null) {
             System.out.println("Polozka neexistuje");
-            try {
-                response.sendRedirect("/");
-            } catch (IOException ex) {
-                Logger.getLogger(FilmResource.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            return null;
+            throw new EntityNotFoundException("Film", id);
         }
         return movie;  
     }
