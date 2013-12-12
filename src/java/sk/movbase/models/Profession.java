@@ -58,6 +58,7 @@ public class Profession implements Serializable {
         this.nazov = nazov;
     }
 
+    @XmlTransient
     public Short getProfesiaId() {
         return profesiaId;
     }

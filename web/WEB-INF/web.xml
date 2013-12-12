@@ -46,7 +46,7 @@
     
     
     <servlet>
-    <servlet-name>Jersey</servlet-name>
+    <servlet-name>RestServices</servlet-name>
     <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
     <init-param>
         <param-name>javax.ws.rs.Application</param-name>
@@ -57,7 +57,7 @@
   </servlet>
   
   <servlet-mapping>
-    <servlet-name>Jersey</servlet-name>
+    <servlet-name>RestServices</servlet-name>
     <url-pattern>/services/*</url-pattern>
   </servlet-mapping>
     

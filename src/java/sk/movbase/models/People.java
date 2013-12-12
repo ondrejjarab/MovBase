@@ -98,6 +98,7 @@ public class People implements Serializable {
         this.schvaleny = schvaleny;
     }
 
+    @XmlTransient
     public Integer getOsobnostId() {
         return osobnostId;
     }
@@ -106,6 +107,7 @@ public class People implements Serializable {
         this.osobnostId = osobnostId;
     }
 
+    @XmlTransient
     public Date getDatumPridania() {
         return datumPridania;
     }
@@ -122,6 +124,7 @@ public class People implements Serializable {
         this.meno = meno;
     }
 
+    @XmlTransient
     public String getFotografia() {
 		// v nazve musi mat defaultne "_small"
         return fotografia;
@@ -150,6 +153,7 @@ public class People implements Serializable {
         this.popis = popis;
     }
 
+    @XmlTransient
     public String getSchvaleny() {
         return schvaleny;
     }
@@ -183,6 +187,7 @@ public class People implements Serializable {
         this.typ = typ;
     }
 
+    @XmlTransient
     public User getAutorId() {
         return autorId;
     }

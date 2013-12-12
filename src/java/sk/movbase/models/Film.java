@@ -7,7 +7,6 @@
 package sk.movbase.models;
 
 import java.io.Serializable;
-import static java.lang.Math.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -35,7 +34,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import sk.movbase.constants.PhotoSize;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
@@ -175,12 +174,12 @@ public class Film implements Serializable {
         this.originalnyNazov = originalnyNazov;
     }
 
+    @XmlTransient
     public String getFotografia() {
 		// v nazve musi mat defaultne "_small"
         return fotografia;
     }
 	
-    //@XmlTransient
 	public String getFotografia(String size) {
 		if(this.getFotografia()==null) return null;
 		return this.getFotografia().replace("_small", "_"+size);
@@ -348,7 +347,7 @@ public class Film implements Serializable {
 		}
 		return zoznam;
 	}
-
+        
     @Override
     public int hashCode() {
         int hash = 0;
@@ -373,5 +372,5 @@ public class Film implements Serializable {
     public String toString() {
         return "sk.movbase.models.Film[ filmId=" + filmId + " ]";
     }
-    
+        
 }
