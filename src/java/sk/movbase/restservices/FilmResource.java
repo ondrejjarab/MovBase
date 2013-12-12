@@ -6,12 +6,8 @@
 
 package sk.movbase.restservices;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
 import javax.persistence.Persistence;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -34,7 +30,7 @@ public class FilmResource {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_XML)
-    public Film getMovie(HttpServletResponse response, @PathParam("id") String id) {
+    public Film getMovie(@PathParam("id") String id) {
         Film movie = null;
         int filmId;
         
@@ -51,6 +47,17 @@ public class FilmResource {
             throw new EntityNotFoundException("Film", id);
         }
         return movie;  
+    }
+    
+    @GET
+    @Path("/")
+    @Produces(MediaType.APPLICATION_XML)
+    public List<Film> getAll() {
+        List<Film> list;
+        FilmJpaController fJpa = new FilmJpaController(Persistence.createEntityManagerFactory("MovBasePU"));
+        list = fJpa.findFilmEntities();
+        return list;
+        
     }
     
 }

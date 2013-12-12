@@ -20,7 +20,6 @@ import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.transaction.UserTransaction;
 import sk.movbase.jpaControllers.exceptions.NonexistentEntityException;
 import sk.movbase.jpaControllers.exceptions.RollbackFailureException;
 import sk.movbase.models.People;
