@@ -26,6 +26,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import sk.movbase.constants.PhotoSize;
 
 /**
  *
@@ -121,6 +122,16 @@ public class User implements Serializable {
     public String getPohlavie() {
         return pohlavie;
     }
+	
+	public String getPhoto() {
+		return this.getPhoto(PhotoSize.SMALL);
+	}
+	
+	public String getPhoto(String size) {
+		if(size.equals(PhotoSize.BIG))
+			return "http://graph.facebook.com/"+this.getFbId()+"/picture?type=large";
+		return "http://graph.facebook.com/"+this.getFbId()+"/picture";
+	}
 
     public void setPohlavie(String pohlavie) {
         this.pohlavie = pohlavie;

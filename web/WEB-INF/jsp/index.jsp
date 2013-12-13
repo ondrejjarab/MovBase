@@ -1,34 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-  <head>
-	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-	<meta name="description" content="">
-	<meta name="keywords" content="">
-	<meta name="robots" content="index,follow">
-	<link rel="stylesheet" type="text/css" href="/resources/style.css">
-	<link rel="shortcut icon" href="/resources/img/favicon.gif">
-	<script type="text/javascript" src="/resources/js/jquery.js"></script>
-	<script type="text/javascript" src="/resources/js/jquery.lightbox-0.5.min.js"></script>
-	<script type="text/javascript" src="/resources/js/scripts.js"></script>
-	<title>Movied.com - Not Just Another MOVIEDatabase</title>
-  </head>
-  <body>
-      
-      <!-- toto pridal Ondrej pre testovacie ucely><---->
-        <c:if test="${user == null}">
-        <a href="/login">Sign In</a>
-        </c:if>
-        <c:if test="${user != null}">
-        <h2>${user.getMeno()}</h2>
-        <a href="/logout">Log out</a>
-        </c:if> 
-      
-      <!-- koniec><------------------->
-        
-		<div id="holder">
-			<p class="center"><img src="/resources/img/logo.png" alt="logo" /></p>
+<%@ include file="/WEB-INF/jsp/components/head.jsp" %>
 			
 			<div id="main_animation">
 				<c:forEach var="movie" items="${movies}" varStatus="i" >
@@ -45,6 +17,5 @@
 					</c:forEach>
 				</div>
 			</div>
-		</div>
-    </body>
-</html>
+
+<%@ include file="/WEB-INF/jsp/components/foot.jsp" %>

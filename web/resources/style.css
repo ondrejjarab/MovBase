@@ -28,6 +28,44 @@ a:hover { text-decoration: underline; }
     width: 800px;
 }
 
+ul#menu 
+{
+    padding:0px 0 0 10px;
+    margin:0px;
+    list-style:none;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:16px;
+    height:40px;
+    line-height:40px;
+    background:#000;
+	border-radius: 5px;
+}
+ul#menu  li
+{
+    float:left;
+}
+ul#menu  li img {
+	height: 30px;
+	margin: 5px;
+	float: left;
+}
+ul#menu  li a
+{
+    color:#FFF;
+    text-decoration:none;
+    padding: 5px 15px 5px 15px;
+}
+ul#menu  li a:hover
+{
+    color:#FFF;
+	border-radius: 3px;
+    background:#c80202;
+}
+ul#menu  li#active a
+{
+    color:#FFF;
+    background:#c80202;
+}
 /* @group INDEX */
 
 /* @group ANIMÁCIA */

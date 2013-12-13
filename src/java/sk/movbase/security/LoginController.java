@@ -6,6 +6,7 @@
 package sk.movbase.security;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -128,7 +129,7 @@ public class LoginController {
             response = client.execute(hGet);
             HttpEntity entity;
             entity = response.getEntity();
-            userData = parseData(EntityUtils.toString(entity));
+            userData = parseData(EntityUtils.toString(entity, Charset.forName("UTF-8")));
         } catch (IOException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }

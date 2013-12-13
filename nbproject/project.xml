@@ -18,91 +18,91 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.httpclient-4.3.1.jar}</file>
+                    <file>${file.reference.httpclient-4.3.1.jar-1}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.httpcore-4.3.jar}</file>
+                    <file>${file.reference.httpcore-4.3.jar-1}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.json-simple-1.1.1.jar}</file>
+                    <file>${file.reference.json-simple-1.1.1.jar-1}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.javax.ws.rs-api-2.0.jar}</file>
+                    <file>${file.reference.javax.ws.rs-api-2.0.jar-1}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.asm-all-repackaged-2.2.0-b21.jar}</file>
+                    <file>${file.reference.asm-all-repackaged-2.2.0-b21.jar-1}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.cglib-2.2.0-b21.jar}</file>
+                    <file>${file.reference.cglib-2.2.0-b21.jar-1}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.guava-14.0.1.jar}</file>
+                    <file>${file.reference.guava-14.0.1.jar-1}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.hk2-api-2.2.0-b21.jar}</file>
+                    <file>${file.reference.hk2-api-2.2.0-b21.jar-1}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.hk2-locator-2.2.0-b21.jar}</file>
+                    <file>${file.reference.hk2-locator-2.2.0-b21.jar-1}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.hk2-utils-2.2.0-b21.jar}</file>
+                    <file>${file.reference.hk2-utils-2.2.0-b21.jar-1}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.javax.annotation-api-1.2.jar}</file>
+                    <file>${file.reference.javax.annotation-api-1.2.jar-1}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.javax.inject-2.2.0-b21.jar}</file>
+                    <file>${file.reference.javax.inject-2.2.0-b21.jar-1}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.javax.servlet-api-3.0.1.jar}</file>
+                    <file>${file.reference.javax.servlet-api-3.0.1.jar-1}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.jaxb-api-2.2.7.jar}</file>
+                    <file>${file.reference.jaxb-api-2.2.7.jar-1}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.org.osgi.core-4.2.0.jar}</file>
+                    <file>${file.reference.org.osgi.core-4.2.0.jar-1}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.osgi-resource-locator-1.0.1.jar}</file>
+                    <file>${file.reference.osgi-resource-locator-1.0.1.jar-1}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.validation-api-1.1.0.Final.jar}</file>
+                    <file>${file.reference.validation-api-1.1.0.Final.jar-1}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.jersey-client.jar}</file>
+                    <file>${file.reference.jersey-client.jar-1}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.jersey-common.jar}</file>
+                    <file>${file.reference.jersey-common.jar-1}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.jersey-container-servlet-core.jar}</file>
+                    <file>${file.reference.jersey-container-servlet-core.jar-1}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.jersey-container-servlet.jar}</file>
+                    <file>${file.reference.jersey-container-servlet.jar-1}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.jersey-server.jar}</file>
+                    <file>${file.reference.jersey-server.jar-1}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
             </web-module-libraries>
