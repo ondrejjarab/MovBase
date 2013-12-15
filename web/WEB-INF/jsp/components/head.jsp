@@ -21,10 +21,16 @@
 				<li><a href="/">Home</a></li>
 				<li><a href="/">Filmy</a></li>
 				<li><a href="/">Osobnosti</a></li>
-				<li clas="right"><input type="text"></li>
-				<li clas="right">
+				<li>
+					<form method="get" action="/search">
+						<input type="text" name="q">
+						<button type="submit">Hľadať</button>
+					</form>
+				</li>
+				<li class="fb_login">
 					<c:if test="${user == null}">
-						<a href="/login">Prihlásenie cez Facbeook</a>
+						<img src="/resources/img/facebook.png" alt="${user.getMeno()}">
+						<a href="/login">Prihlásenie</a>
 					</c:if>
 					<c:if test="${user != null}">
 						<img src="${user.getPhoto()}" alt="${user.getMeno()}">
