@@ -6,17 +6,28 @@
 
 package sk.movbase.controllers;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 import sk.movbase.constants.PhotoSize;
 import sk.movbase.jpaControllers.FilmJpaController;
+import sk.movbase.jpaControllers.UserJpaController;
 import sk.movbase.models.Film;
+import sk.movbase.models.User;
 
 /**
  *
@@ -35,7 +46,7 @@ public class FilmController {
     }
     
     @RequestMapping("{id}")
-    public String show(@PathVariable int id, /**/HttpServletRequest request, /**/ModelMap model) {
+    public String show(@PathVariable int id, HttpServletRequest request, ModelMap model) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MovBasePU");
         FilmJpaController fJpa = new FilmJpaController(emf);
         Film film = fJpa.findFilm(id);
@@ -49,4 +60,59 @@ public class FilmController {
                 ///////////
         return "film/show"; 
     }
+    
+    @RequestMapping(value = "/new", method = RequestMethod.GET) 
+    public ModelAndView newMovie(ModelMap model) {
+        List<String> list = new ArrayList<String>();
+        list.add("film");
+        list.add("seriál");
+        model.addAttribute("film", new Film());
+        model.addAttribute("types", list);
+        return new ModelAndView("film/new", "film", new Film());
+    }
+    
+    
+    
+  @RequestMapping(method = RequestMethod.POST)
+   public ModelAndView addFilm(@ModelAttribute("SpringWeb")Film film, ModelMap model, 
+           HttpServletRequest request, HttpServletResponse response) {
+       if (request.getSession().getAttribute("userId") == null) {
+           try {
+               response.sendRedirect("/");//ak nieje prihlaseny presmeruje ho
+               return null;
+           } catch (IOException ex) {
+               Logger.getLogger(FilmController.class.getName()).log(Level.SEVERE, null, ex);
+           }
+       }
+       
+       if (!isValid(film)) {
+               return new ModelAndView("film/new", "film", new Film());
+            
+       }
+        User autorZaznamu = null;
+        UserJpaController uJpa = new UserJpaController(Persistence.createEntityManagerFactory("MovBasePU"));
+        autorZaznamu = uJpa.findUser(((int) request.getSession().getAttribute("userId")));
+        
+        film.setAutorId(autorZaznamu);//povinne udaje
+        film.setDatumPridania(new Date());
+        film.setSchvaleny("1");//potom zmenit podla typu prihláseného
+        
+        FilmJpaController fJpa = new FilmJpaController(Persistence.createEntityManagerFactory("MovBasePU"));
+        try {
+            fJpa.create(film);    
+        } catch (Exception ex) {
+            Logger.getLogger(FilmController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    return new ModelAndView("index");
+   }
+   
+   private boolean isValid(Film film) {
+       return !(film.getNazov().length() == 0 || film.getPopis().length() == 0);//treba porovnavat na dlzku nie na null
+           
+   }
+
+    
+    
+    
 }

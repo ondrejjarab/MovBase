@@ -123,12 +123,13 @@ public class Film implements Serializable {
     public Film() {
     }
 
-    public Film(Date datumPridania, String typ, String nazov, String popis, String schvaleny) {
+    public Film(Date datumPridania, String typ, String nazov, String popis, String schvaleny, User autorId) {
         this.datumPridania = datumPridania;
         this.typ = typ;
         this.nazov = nazov;
         this.popis = popis;
         this.schvaleny = schvaleny;
+        this.autorId = autorId;
     }
 
     @XmlTransient
