@@ -66,14 +66,14 @@ public class FilmController {
         List<String> list = new ArrayList<String>();
         list.add("film");
         list.add("seriál");
-        model.addAttribute("film", new Film());
+        model.addAttribute("film", new Film()); 
         model.addAttribute("types", list);
-        return new ModelAndView("film/new", "film", new Film());
+        return new ModelAndView("film/new", model);
     }
     
     
     
-  @RequestMapping(method = RequestMethod.POST)
+   @RequestMapping(method = RequestMethod.POST)
    public ModelAndView addFilm(@ModelAttribute("SpringWeb")Film film, ModelMap model, 
            HttpServletRequest request, HttpServletResponse response) {
        if (request.getSession().getAttribute("userId") == null) {
