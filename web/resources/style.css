@@ -2,6 +2,7 @@
 
 .center { text-align: center; }
 .invisible { display: none; }
+.clear { clear: both; }
 
 body {
   text-align: center;
@@ -39,10 +40,16 @@ ul#menu
     line-height:40px;
     background:#000;
 	border-radius: 5px;
+	position: relative;
 }
 ul#menu  li
 {
     float:left;
+}
+ul#menu  li.fb_login {
+	position: absolute;
+	top: 0;
+	right: 10px;
 }
 ul#menu  li img {
 	height: 30px;
@@ -66,6 +73,34 @@ ul#menu  li#active a
     color:#FFF;
     background:#c80202;
 }
+
+#menu input {		
+	width:150px;
+	height: 30px;
+	line-height: 30px;
+	border:1px solid #111;
+	background:#282828 url(/resources/img/backgrounds/form_input.gif) repeat-x;
+	padding:5px 3px;
+	margin-left: 25px;
+	font-size: 14px;
+	color:#fff;
+	border:1px solid #121229;
+}	
+#menu input:active, #menu input:hover {
+	border:1px solid #70ad2e;
+}
+#menu button{
+	padding:0 20px;
+	height:30px;
+	font-size: 14px;
+	line-height:30px;		
+	border:1px solid #70ad2e;
+	background:#5aae00 url(/resources/img/backgrounds/form_button.gif) repeat-x;
+	color:#fff;
+	cursor:pointer;		
+	text-align:center;		
+	}	
+
 /* @group INDEX */
 
 /* @group ANIMÁCIA */
