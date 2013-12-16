@@ -48,7 +48,7 @@
 						</c:forEach>
 					</c:otherwise>
 				</c:choose>
-                                <form:form method="POST" action="/movie/1/comments" modelAttribute="comment">
+                                <form:form method="POST" action="/movie/${movie.getFilmId()}/comments" modelAttribute="comment">
                                     <form:label path="komentar">Tvoj komentár</form:label>
                                     <form:textarea path="komentar" rows="3" cols="99" />
                                     <input type="submit" value="Pridaj komentár"/>
