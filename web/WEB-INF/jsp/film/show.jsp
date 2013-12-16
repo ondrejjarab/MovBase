@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ include file="/WEB-INF/jsp/components/head.jsp" %>
 
 			<div class="left_col clear">
@@ -43,10 +44,15 @@
 					</c:when>
 					<c:otherwise>
 						<c:forEach var="comment" items="${movie.getCommentCollection()}" varStatus="loopCounter" >
-						
+                                                    <p class="center">${comment.getKomentar()}</p>
 						</c:forEach>
 					</c:otherwise>
 				</c:choose>
+                                <form:form method="POST" action="/movie/${movie.getFilmId()}/comments" modelAttribute="comment">
+                                    <form:label path="komentar">Tvoj komentár</form:label>
+                                    <form:textarea path="komentar" rows="3" cols="99" />
+                                    <input type="submit" value="Pridaj komentár"/>
+                                </form:form>
 			</div>
 			
 <%@ include file="/WEB-INF/jsp/components/foot.jsp" %>

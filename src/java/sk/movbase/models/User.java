@@ -83,6 +83,10 @@ public class User implements Serializable {
     private Collection<People> peopleCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "autorId")
     private Collection<Genre> genreCollection;
+    
+    @Size(max = 1)
+    @Column(name = "administrator")
+    private String administrator;
 
     public User() {
     }
@@ -93,6 +97,14 @@ public class User implements Serializable {
         this.meno = meno;
         this.email = email;
         this.datumRegistracie = datumRegistracie; 
+    }
+    
+    public User(long fbId, String meno, String email, Date datumRegistracie, String administrator) {
+        this.fbId = fbId;
+        this.meno = meno;
+        this.email = email;
+        this.datumRegistracie = datumRegistracie;
+        this.administrator = administrator;
     }
 
     public Integer getPouzivatelId() {
@@ -221,6 +233,24 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "sk.movbase.models.User[ pouzivatelId=" + pouzivatelId + " ]";
+    }
+
+    /**
+     * @return the administrator
+     */
+    public String getAdministrator() {
+        return administrator;
+    }
+
+    /**
+     * @param administrator the administrator to set
+     */
+    public void setAdministrator(String administrator) {
+        this.administrator = administrator;
+    }
+    
+    public boolean isAdmin() {
+        return this.administrator.equals("a");
     }
     
    
