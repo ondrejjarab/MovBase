@@ -26,7 +26,7 @@
             <p class="center"><img src="/resources/img/logo.png" alt="logo" /></p>
             <h2>Nová osobnosť</h2>
             <div class="right_col">
-                <form:form method="POST" action="/people" modelAttribute="person">
+                <form:form method="POST" action="/people" modelAttribute="person" enctype="multipart/form-data">
                     <table>
                         <tr>
                             <td><form:label path="meno">Meno a priezvisko</form:label></td>
@@ -46,6 +46,8 @@
         <td><form:label name="narodnost" path="narodnost">Narodnost</form:label></td>
         <td><form:select name="narodnost" path = "narodnost" items="${nations}" itemValue="krajinaId" itemLabel="nazov"/></td>
     </tr>
+    
+    <input type="file" name="fotografia" />
                         
                        
 

@@ -3,7 +3,6 @@
 <%@ include file="/WEB-INF/jsp/components/head.jsp" %>
 
 
-			<p class="center"><img src="/resources/img/logo.png" alt="logo" /></p>
 			<div class="left_col">
 				<a href="${actor.getPhotoURL(bigPhoto)}" class="lbox"><img src="${actor.getPhotoURL(smallPhoto)}" class="movie_photo" alt="${actor.getMeno()}" /></a>
 			</div>

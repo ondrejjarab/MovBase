@@ -290,7 +290,7 @@ public class Film implements Serializable {
 	
 	public double getRating() {
 		// TODO: vratit priemerne hodnotenie filmu, ak este nebol hodnoteny, nulu
-		return 4.2;
+		return 1.2;
 	}
 	
 	/**

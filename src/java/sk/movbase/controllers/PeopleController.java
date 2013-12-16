@@ -6,10 +6,18 @@
 
 package sk.movbase.controllers;
 
+import java.awt.AlphaComposite;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.servlet.http.HttpServletRequest;
@@ -20,12 +28,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import sk.movbase.constants.PhotoSize;
 import sk.movbase.jpaControllers.CountryJpaController;
 import sk.movbase.jpaControllers.PeopleJpaController;
 import sk.movbase.jpaControllers.ProfessionJpaController;
 import sk.movbase.jpaControllers.UserJpaController;
+import sk.movbase.jpaControllers.exceptions.RollbackFailureException;
 import sk.movbase.models.Country;
 import sk.movbase.models.People;
 import sk.movbase.models.Profession;
@@ -84,7 +94,10 @@ public class PeopleController {
     public ModelAndView createPerson(ModelMap model, 
            HttpServletRequest request, HttpServletResponse response, 
            @RequestParam(value = "narodnost") Short krajinaId, @RequestParam(value = "typ") Short profesiaId, 
-           @RequestParam(value = "meno") String meno, @RequestParam(value = "popis") String popis) {
+           @RequestParam(value = "meno") String meno, @RequestParam(value = "popis") String popis,
+           @RequestParam(value = "fotografia") MultipartFile fotografia) {
+        
+       
        if (request.getSession().getAttribute("userId") == null) {
                return new ModelAndView("index");//ak nieje prihlaseny presmeruje ho  
        }
@@ -98,6 +111,7 @@ public class PeopleController {
        person.setSchvaleny("1");
        person.setMeno(meno);
        person.setPopis(popis);
+     
        
        if (!isValid(person)) {                        //overi povinne atributy
            return new ModelAndView("index");
@@ -118,6 +132,24 @@ public class PeopleController {
             Logger.getLogger(PeopleController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+        //test na fotografia == null;
+        int photoId = person.getOsobnostId();
+        person.setFotografia(photoId + "_small.jpg");
+        try {
+            peopJpa.edit(person);
+            
+        } catch (RollbackFailureException ex) {
+            Logger.getLogger(PeopleController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(PeopleController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.savePhotos(fotografia, photoId);
+        try {
+            response.sendRedirect("/");
+        } catch (IOException ex) {
+            Logger.getLogger(PeopleController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     return new ModelAndView("index");
    }
     
@@ -137,6 +169,58 @@ public class PeopleController {
        return !(person.getMeno().length() == 0 || person.getPopis().length() == 0);//treba porovnavat na dlzku nie na null
            
    }
+    
+    private BufferedImage createResizedCopy(Image originalImage, 
+                int scaledWidth, int scaledHeight, 
+                boolean preserveAlpha)
+    {
+        int imageType = preserveAlpha ? BufferedImage.TYPE_INT_RGB : BufferedImage.TYPE_INT_ARGB;
+        BufferedImage scaledBI = new BufferedImage(scaledWidth, scaledHeight, imageType);
+        Graphics2D g = scaledBI.createGraphics();
+        if (preserveAlpha) {
+                g.setComposite(AlphaComposite.Src);
+        }
+        g.drawImage(originalImage, 0, 0, scaledWidth, scaledHeight, null); 
+        g.dispose();
+        return scaledBI;
+    }
+
+
+  private void savePhotos(MultipartFile file, int photoId) {
+      File fileT = null;
+      File fileS = null;
+      File fileB = null;
+      
+        try {
+        fileT = new File(PhotoSize.PHOTO_RES_PATH + "\\person_photos\\" + photoId + "\\" + photoId + "_tiny.jpg");
+        fileT.mkdirs();
+        fileT.createNewFile();
+        fileS = new File(PhotoSize.PHOTO_RES_PATH + "\\person_photos\\" + photoId + "\\" + photoId + "_small.jpg");
+        fileS.createNewFile();
+        fileB = new File(PhotoSize.PHOTO_RES_PATH + "\\person_photos\\" + photoId  + "\\" + photoId + "_big.jpg");
+        fileB.createNewFile();
+        System.out.println(fileT.getAbsoluteFile());
+        } catch(IOException ex) {
+            ex.printStackTrace();
+        }
+
+        
+        try {
+            BufferedImage image = ImageIO.read(new ByteArrayInputStream(file.getBytes()));
+            BufferedImage tiny = this.createResizedCopy(image, 50, 67, false);
+            BufferedImage small = this.createResizedCopy(image, 230, 290, false);
+            BufferedImage bigg = this.createResizedCopy(image, 600, 800, false);
+
+          
+            ImageIO.write(tiny, "jpg", fileT);
+            ImageIO.write(small, "jpg", fileS);
+            ImageIO.write(bigg, "jpg", fileB);
+
+            
+        } catch (IOException ex) {
+            Logger.getLogger(PeopleController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+  }
     
     
 }
