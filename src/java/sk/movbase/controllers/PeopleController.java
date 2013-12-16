@@ -50,7 +50,7 @@ import sk.movbase.models.User;
 public class PeopleController {
     
     @RequestMapping(method = RequestMethod.GET)
-    public String index(ModelMap model,
+    public String index(HttpServletRequest request, ModelMap model,
 						@RequestParam(value="page", required=false) Integer page, 
 						@RequestParam(value="order", required=false) Integer order, 
 						@RequestParam(value="items", required=false) Integer items_per_page,
@@ -77,6 +77,13 @@ public class PeopleController {
 		model.addAttribute("professions", prJpa.findProfessionEntities());
 		model.addAttribute("items", items_per_page);
 		model.addAttribute("paging_url", "/people?order="+order+"&amp;items="+items_per_page+"&amp;profession="+profession+"&amp;search="+search+"&amp;");
+		UserJpaController uJpa = new UserJpaController(Persistence.createEntityManagerFactory("MovBasePU"));
+        User user = null;
+        if (request.getSession().getAttribute("userId") != null) {
+			user = uJpa.findUser((Integer) request.getSession().getAttribute("userId"));
+        }
+		model.addAttribute("user", user);
+		model.addAttribute("session", request.getSession());
         return "people/index";
     }
     
