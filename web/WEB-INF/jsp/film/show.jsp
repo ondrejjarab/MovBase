@@ -63,6 +63,9 @@
                                     <input type="submit" value="Hodnotiť"/>
                                 </form:form>
                                 </c:if>
+                                <c:if test="${comment.getHodnotenie() != null}">
+                                    <p class="center">Vaše hodnotenie: ${comment.getHodnotenie() / 5}</p>
+                                </c:if>
 			</div>
 			
 <%@ include file="/WEB-INF/jsp/components/foot.jsp" %>

@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -289,8 +290,7 @@ public class Film implements Serializable {
 	}
 	
 	public double getRating() {
-		// TODO: vratit priemerne hodnotenie filmu, ak este nebol hodnoteny, nulu
-		return 1.2;
+		return countRating();
 	}
 	
 	/**
@@ -372,5 +372,21 @@ public class Film implements Serializable {
     public String toString() {
         return "sk.movbase.models.Film[ filmId=" + filmId + " ]";
     }
-        
+    
+    private double countRating() {
+        int count = 0;
+        int sum = 0;
+                
+        for (Iterator iterator = getCommentCollection().iterator(); iterator.hasNext();) {
+            Comment comment = (Comment) iterator.next();
+            if (comment.getHodnotenie() != null) {
+                count++;
+                sum += comment.getHodnotenie();
+            }
+        }
+        if (count != 0)
+            return sum/count;
+        else return 0;
+    }
+
 }

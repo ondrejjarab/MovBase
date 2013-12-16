@@ -90,6 +90,15 @@ public class FilmController {
         if (request.getSession().getAttribute("userId") != null) {
         user = uJpa.findUser((Integer) request.getSession().getAttribute("userId"));
         }
+        Comment comment = null;
+        if (user != null)
+            comment = user.hasRatedFilm(film.getFilmId());
+        
+        if (comment == null) {
+            comment = new Comment();
+        }
+        
+        
         model.addAttribute("user", user);
         model.addAttribute("movie", film); 
         model.addAttribute("menu_filmy", true); 
@@ -97,7 +106,7 @@ public class FilmController {
 		model.addAttribute("smallPhoto", PhotoSize.SMALL);
 		model.addAttribute("bigPhoto", PhotoSize.BIG);
 		model.addAttribute("descriptionCharacters", 200);
-                model.addAttribute("comment", new Comment());
+                model.addAttribute("comment", comment);
                 //////////////
                 model.addAttribute("session", request.getSession());
                 ///////////

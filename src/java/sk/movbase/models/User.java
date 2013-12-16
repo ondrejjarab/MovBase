@@ -9,6 +9,7 @@ package sk.movbase.models;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,6 +20,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Persistence;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -27,6 +29,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import sk.movbase.constants.PhotoSize;
+import sk.movbase.jpaControllers.FilmJpaController;
 
 /**
  *
@@ -251,6 +254,18 @@ public class User implements Serializable {
     
     public boolean isAdmin() {
         return this.administrator.equals("a");
+    }
+    
+    public Comment hasRatedFilm(int id) {
+        FilmJpaController fJpa = new FilmJpaController(Persistence.createEntityManagerFactory("MovBasePU"));
+        Film film = fJpa.findFilm(id);
+        for (Iterator iterator = getCommentCollection().iterator(); iterator.hasNext();) {
+            Comment comment = (Comment) iterator.next();
+            if (comment.getFilmId().equals(film) && comment.getHodnotenie() != null) {
+                return comment;
+            }
+        }
+        return null;
     }
     
    
