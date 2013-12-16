@@ -3,6 +3,8 @@
 .center { text-align: center; }
 .invisible { display: none; }
 .clear { clear: both; }
+.photo_tiny { width: 50px; }
+.photo_small { width: 230px; }
 
 body {
   text-align: center;
@@ -71,25 +73,31 @@ ul#menu  li a:hover
 ul#menu  li#active a
 {
     color:#FFF;
+	border-radius: 3px;
     background:#c80202;
 }
 
-#menu input {		
+
+
+input {		
 	width:150px;
 	height: 30px;
 	line-height: 30px;
 	border:1px solid #111;
 	background:#282828 url(/resources/img/backgrounds/form_input.gif) repeat-x;
 	padding:5px 3px;
-	margin-left: 25px;
 	font-size: 14px;
 	color:#fff;
 	border:1px solid #121229;
 }	
-#menu input:active, #menu input:hover {
+#menu li input {
+	
+	margin-left: 25px;
+}
+input:active, input:hover {
 	border:1px solid #70ad2e;
 }
-#menu button{
+button{
 	padding:0 20px;
 	height:30px;
 	font-size: 14px;
@@ -139,6 +147,62 @@ ul#menu  li#active a
 
 
 /* @end */
+
+/* @group ZOZNAM FILMOV/HERCOV */ 
+
+.list {
+	width: 550px;
+	float: left;
+}
+
+.list_item {
+	width: 100%;
+	padding: 10px;
+	margin: 10px 0;
+	clear: both;
+	background: #000;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.list_item h2 {
+	padding: 10px 30px 10px 0;
+	margin: 0;
+}
+
+.list_item img {
+	float: left;
+	margin-right: 10px;
+}
+
+.list_item .show_button {
+	float: right;
+	margin: 0 10px;
+	color:#FFF;
+	border-radius: 3px;
+	font-size: 14px;
+	padding: 5px 30px;
+}
+
+.list_item .show_button:hover {
+    background:#c80202;
+	text-decoration: none;
+}
+
+.filter_form {
+	width: 220px;
+	float: left;
+	background: #000;
+	margin: 10px 0 0 20px;
+	padding: 15px;
+	font-size: 14px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+/* @group */
 
 /* @group DETAIL FILMU */
 

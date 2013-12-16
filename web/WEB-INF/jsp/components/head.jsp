@@ -19,17 +19,17 @@
 			<p class="center"><img src="/resources/img/logo.png" alt="logo" /></p>
 			<ul id="menu">
 				<li><a href="/">Home</a></li>
-				<li><a href="/">Filmy</a></li>
-				<li><a href="/">Osobnosti</a></li>
+				<li<c:if test="${menu_filmy==true}"> id="active"</c:if>><a href="/movies">Filmy</a></li>
+				<li<c:if test="${menu_osobnosti==true}"> id="active"</c:if>><a href="/people">Osobnosti</a></li>
 				<li>
-					<form method="get" action="/search">
-						<input type="text" name="q">
-						<button type="submit">Hľadať</button>
+					<form method="get" action="/movies">
+						<input type="text" name="search">
+						<button type="submit">Hľadať film</button>
 					</form>
 				</li>
 				<li class="fb_login">
 					<c:if test="${user == null}">
-						<img src="/resources/img/facebook.png" alt="${user.getMeno()}">
+						<img src="/resources/img/facebook.png" alt="">
 						<a href="/login">Prihlásenie</a>
 					</c:if>
 					<c:if test="${user != null}">

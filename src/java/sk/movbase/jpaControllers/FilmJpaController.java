@@ -18,7 +18,14 @@ import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Order;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.metamodel.EntityType;
+import javax.persistence.metamodel.Metamodel;
 import javax.transaction.UserTransaction;
+import sk.movbase.constants.OrderFilmTypes;
 import sk.movbase.jpaControllers.exceptions.IllegalOrphanException;
 import sk.movbase.jpaControllers.exceptions.NonexistentEntityException;
 import sk.movbase.jpaControllers.exceptions.RollbackFailureException;
@@ -26,6 +33,7 @@ import sk.movbase.models.People;
 import sk.movbase.models.Country;
 import sk.movbase.models.Comment;
 import sk.movbase.models.Film;
+import sk.movbase.models.Film_;
 
 /**
  *
@@ -319,12 +327,44 @@ public class FilmJpaController implements Serializable {
     public List<Film> findFilmEntities(int maxResults, int firstResult) {
         return findFilmEntities(false, maxResults, firstResult);
     }
+	
+	private List<Film> findFilmEntities(boolean all, int maxResults, int firstResult) {
+        return this.findFilmEntities(all, maxResults, firstResult, 0, 0, "");
+    }
 
-    private List<Film> findFilmEntities(boolean all, int maxResults, int firstResult) {
+	
+    public List<Film> findFilmEntities(boolean all, int maxResults, int firstResult, int orderby, Integer genre, String search) {
         EntityManager em = getEntityManager();
         try {
-            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Film.class));
+			CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery cq = cb.createQuery();
+			Root<Film> film_root = cq.from(Film.class);
+			cq.select(cq.from(Film.class));
+			Order order;
+			
+			// TODO: implementovat vyhladavanie na zaklade zanru
+			if(genre!=null && genre>0) {
+				//Predicate predicate = em.getCriteriaBuilder().equal(cq.from(Film.class).join("genreCollection").get("zanerId"), genre);
+				//cq.where(predicate).distinct(true);
+			}
+			
+			// TODO: implementovat hladanie podla klucoveho slova z nazvu
+			if(search!=null && search.length()>0) {
+				//Predicate predicate;
+				//cq.where(predicate);
+			}
+			
+			switch(orderby) {
+				case OrderFilmTypes.NAZOV_DESC: order = cb.desc(film_root.get(Film_.nazov)); break;
+				case OrderFilmTypes.ROK_ASC: order = cb.asc(film_root.get(Film_.rokVydania)); break;
+				case OrderFilmTypes.ROK_DESC: order = cb.desc(film_root.get(Film_.rokVydania)); break;
+				case OrderFilmTypes.PRIDANY_ASC: order = cb.asc(film_root.get(Film_.datumPridania)); break;
+				case OrderFilmTypes.PRIDANY_DESC: order = cb.desc(film_root.get(Film_.datumPridania)); break;
+				default: 
+					order = em.getCriteriaBuilder().asc(film_root.get(Film_.nazov));
+			}
+			
+            cq.orderBy(order);
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
