@@ -24,8 +24,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import sk.movbase.constants.OrderFilmTypes;
 import sk.movbase.constants.PhotoSize;
 import sk.movbase.jpaControllers.FilmJpaController;
+import sk.movbase.jpaControllers.GenreJpaController;
 import sk.movbase.jpaControllers.UserJpaController;
 import sk.movbase.models.Comment;
 import sk.movbase.models.Film;
@@ -42,14 +44,31 @@ public class FilmController {
     
 	
     @RequestMapping(method=RequestMethod.GET)
-    public String index(ModelMap model, @RequestParam(value="page", required=false) Integer page, @RequestParam(value="genre", required=false) Integer genre) {
-		Integer items_per_page = 50;
+    public String index(ModelMap model, 
+						@RequestParam(value="page", required=false) Integer page, 
+						@RequestParam(value="order", required=false) Integer order, 
+						@RequestParam(value="items", required=false) Integer items_per_page,
+						@RequestParam(value="genre", required=false) Integer genre,
+						@RequestParam(value="search", required=false) String search) {
+		if(items_per_page==null) items_per_page=10; else if(items_per_page<10) items_per_page = 10; else if(items_per_page>50) items_per_page = 50;
+		if(order==null) order=0;
+		if(search==null) search="";
         FilmJpaController fJpa = new FilmJpaController(Persistence.createEntityManagerFactory("MovBasePU"));
-		if(page==null || page<1 || page>fJpa.getFilmCount()/items_per_page) page = 1;
+		GenreJpaController gJpa = new GenreJpaController(Persistence.createEntityManagerFactory("MovBasePU"));
+		Integer lastpage = (int)(long)Math.round(Math.ceil(fJpa.getFilmCount()/items_per_page));
+		if(page==null || page<1 || page>lastpage) page = 1;
 		Integer from = (page-1)*items_per_page;
-        model.addAttribute("movies", fJpa.findFilmEntities(false, items_per_page, from, 0, 1, ""));
+        model.addAttribute("movies", fJpa.findFilmEntities(false, items_per_page, from, order, genre, search));
 		model.addAttribute("menu_filmy", true); 
 		model.addAttribute("tinyPhoto", PhotoSize.TINY);
+		model.addAttribute("actualpage", page);
+		model.addAttribute("lastpage", lastpage);
+		model.addAttribute("search", search);
+		model.addAttribute("genre", genre);
+		model.addAttribute("order", order);
+		model.addAttribute("genres", gJpa.findGenreEntities());
+		model.addAttribute("items", items_per_page);
+		model.addAttribute("paging_url", "/movies?page="+page+"&amp;order="+order+"&amp;items="+items_per_page+"&amp;genre="+genre+"&amp;search="+search+"&amp;");
         return "film/index";
     }
      

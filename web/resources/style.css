@@ -77,22 +77,27 @@ ul#menu  li#active a
     background:#c80202;
 }
 
-#menu input {		
+
+
+input {		
 	width:150px;
 	height: 30px;
 	line-height: 30px;
 	border:1px solid #111;
 	background:#282828 url(/resources/img/backgrounds/form_input.gif) repeat-x;
 	padding:5px 3px;
-	margin-left: 25px;
 	font-size: 14px;
 	color:#fff;
 	border:1px solid #121229;
 }	
-#menu input:active, #menu input:hover {
+#menu li input {
+	
+	margin-left: 25px;
+}
+input:active, input:hover {
 	border:1px solid #70ad2e;
 }
-#menu button{
+button{
 	padding:0 20px;
 	height:30px;
 	font-size: 14px;
@@ -145,12 +150,20 @@ ul#menu  li#active a
 
 /* @group ZOZNAM FILMOV/HERCOV */ 
 
+.list {
+	width: 550px;
+	float: left;
+}
+
 .list_item {
-	width: 500px;
+	width: 100%;
 	padding: 10px;
 	margin: 10px 0;
 	clear: both;
 	background: #000;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 .list_item h2 {
@@ -175,6 +188,18 @@ ul#menu  li#active a
 .list_item .show_button:hover {
     background:#c80202;
 	text-decoration: none;
+}
+
+.filter_form {
+	width: 220px;
+	float: left;
+	background: #000;
+	margin: 10px 0 0 20px;
+	padding: 15px;
+	font-size: 14px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 /* @group */
