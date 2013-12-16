@@ -126,6 +126,10 @@ public class FilmController {
     }
     
     
+    public ModelAndView editMovie() {
+        return null;
+    
+    }
     
    @RequestMapping(method = RequestMethod.POST)
    public ModelAndView addFilm(@ModelAttribute("SpringWeb")Film film, ModelMap model, 

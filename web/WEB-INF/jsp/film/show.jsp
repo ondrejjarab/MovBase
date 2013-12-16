@@ -9,8 +9,8 @@
                     <div id="rating_box_graphic_background">&nbsp;</div>
                     <div id="rating_box_graphic_foreground" style="width:${movie.getGraphicRating()}px;">&nbsp;</div>
                 </div>
-				<a href="#" class="show_button">Upraviť</a>
-				<a href="#" class="show_button">Zmazať</a>
+				<a href="movies/${movie.getFilmId()}/edit" class="show_button">Upraviť</a>
+				<a href="movies/${movie.getFilmId()}/delete" class="show_button">Zmazať</a>
 			</div>
 			<div class="right_col">
 				<h2>${movie.nazov} (${movie.rokVydania})</h2>
@@ -64,7 +64,7 @@
                                 </form:form>
                                 </c:if>
                                 <c:if test="${comment.getHodnotenie() != null}">
-                                    <p class="center">Vaše hodnotenie: ${comment.getHodnotenie() / 5}</p>
+                                    <p class="center">Vaše hodnotenie: ${comment.getHodnotenie()} / 5</p>
                                 </c:if>
 			</div>
 			
