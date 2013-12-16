@@ -50,11 +50,19 @@
 						</c:forEach>
 					</c:otherwise>
 				</c:choose>
+                                 <c:if test="${comment.getHodnotenie() == null}">
                                 <form:form method="POST" action="/movie/${movie.getFilmId()}/comments" modelAttribute="comment">
                                     <form:label path="komentar">Tvoj komentár</form:label>
                                     <form:textarea path="komentar" rows="3" cols="99" />
-                                    <input type="submit" value="Pridaj komentár"/>
+               <h3>Ohodnoť film</h3>
+                                    <form:radiobutton path="hodnotenie" value="1"/>Nedá sa pozerať
+                                    <form:radiobutton path="hodnotenie" value="2"/>Slabé
+                                    <form:radiobutton path="hodnotenie" value="2"/>Môže byť
+                                    <form:radiobutton path="hodnotenie" value="4"/>Dobré
+                                    <form:radiobutton path="hodnotenie" value="5"/>Veľmi dobré
+                                    <input type="submit" value="Hodnotiť"/>
                                 </form:form>
+                                </c:if>
 			</div>
 			
 <%@ include file="/WEB-INF/jsp/components/foot.jsp" %>
