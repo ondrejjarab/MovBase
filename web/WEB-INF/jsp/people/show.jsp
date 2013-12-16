@@ -5,6 +5,8 @@
 
 			<div class="left_col">
 				<a href="${actor.getPhotoURL(bigPhoto)}" class="lbox"><img src="${actor.getPhotoURL(smallPhoto)}" class="movie_photo" alt="${actor.getMeno()}" /></a>
+				<a href="#" class="show_button">Upraviť</a>
+				<a href="#" class="show_button">Zmazať</a>
 			</div>
 			<div class="right_col">
 				<h2>${actor.getMeno()}</h2>

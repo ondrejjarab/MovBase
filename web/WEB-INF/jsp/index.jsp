@@ -13,7 +13,9 @@
 					<c:forEach var="movie" items="${movies}" varStatus="i" >
 						<div class="controller_unit
 							 <c:if test="${i.count==1}">animation_controller_active</c:if>
-							 " id="c${i.count}"><strong>${movie.getNazov()}</strong><br>${movie.getRokVydania()}</div>
+							 " id="c${i.count}"><strong>${movie.getNazov()}</strong><br>${movie.getRokVydania()}
+							<a href="${movie.getProfileURL()}" class="show_button">Zobraziť</a>
+						</div>
 					</c:forEach>
 				</div>
 			</div>

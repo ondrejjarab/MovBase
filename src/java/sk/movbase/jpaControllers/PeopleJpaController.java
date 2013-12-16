@@ -20,9 +20,13 @@ import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Order;
+import sk.movbase.constants.OrderFilmTypes;
 import sk.movbase.jpaControllers.exceptions.NonexistentEntityException;
 import sk.movbase.jpaControllers.exceptions.RollbackFailureException;
 import sk.movbase.models.People;
+import sk.movbase.models.People_;
 
 /**
  *
@@ -235,10 +239,39 @@ public class PeopleJpaController implements Serializable {
     }
 
     private List<People> findPeopleEntities(boolean all, int maxResults, int firstResult) {
+		return this.findPeopleEntities(all, maxResults, firstResult, 0, 0, "");
+    }
+	
+	public List<People> findPeopleEntities(boolean all, int maxResults, int firstResult, int orderby, Integer profession, String search) {
         EntityManager em = getEntityManager();
         try {
-            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(People.class));
+			CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery cq = cb.createQuery();
+			Root<People> people_root = cq.from(People.class);
+			cq.select(people_root);
+			Order order;
+			
+			// TODO: implementovat vyhladavanie na zaklade profesie
+			if(profession!=null && profession>0) {
+				//Predicate predicate = em.getCriteriaBuilder().equal(cq.from(Film.class).join("genreCollection").get("zanerId"), genre);
+				//cq.where(predicate).distinct(true);
+			}
+			
+			// TODO: implementovat hladanie podla klucoveho slova z nazvu
+			if(search!=null && search.length()>0) {
+				//Predicate predicate;
+				//cq.where(predicate);
+			}
+			
+			switch(orderby) {
+				case OrderFilmTypes.NAZOV_DESC: order = cb.desc(people_root.get(People_.meno)); break;
+				case OrderFilmTypes.PRIDANY_ASC: order = cb.asc(people_root.get(People_.datumPridania)); break;
+				case OrderFilmTypes.PRIDANY_DESC: order = cb.desc(people_root.get(People_.datumPridania)); break;
+				default: 
+					order = em.getCriteriaBuilder().asc(people_root.get(People_.meno));
+			}
+			
+            cq.orderBy(order);
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -249,6 +282,7 @@ public class PeopleJpaController implements Serializable {
             em.close();
         }
     }
+	
 
     public People findPeople(Integer id) {
         EntityManager em = getEntityManager();
