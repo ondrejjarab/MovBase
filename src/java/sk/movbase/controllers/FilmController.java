@@ -26,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import sk.movbase.constants.PhotoSize;
 import sk.movbase.jpaControllers.FilmJpaController;
 import sk.movbase.jpaControllers.UserJpaController;
+import sk.movbase.models.Comment;
 import sk.movbase.models.Film;
 import sk.movbase.models.User;
 
@@ -61,6 +62,7 @@ public class FilmController {
 		model.addAttribute("smallPhoto", PhotoSize.SMALL);
 		model.addAttribute("bigPhoto", PhotoSize.BIG);
 		model.addAttribute("descriptionCharacters", 200);
+                model.addAttribute("comment", new Comment());
                 //////////////
                 model.addAttribute("session", request.getSession());
                 ///////////
