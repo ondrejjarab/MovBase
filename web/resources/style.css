@@ -3,6 +3,8 @@
 .center { text-align: center; }
 .invisible { display: none; }
 .clear { clear: both; }
+.photo_tiny { width: 50px; }
+.photo_small { width: 230px; }
 
 body {
   text-align: center;
@@ -71,6 +73,7 @@ ul#menu  li a:hover
 ul#menu  li#active a
 {
     color:#FFF;
+	border-radius: 3px;
     background:#c80202;
 }
 
@@ -139,6 +142,42 @@ ul#menu  li#active a
 
 
 /* @end */
+
+/* @group ZOZNAM FILMOV/HERCOV */ 
+
+.list_item {
+	width: 500px;
+	padding: 10px;
+	margin: 10px 0;
+	clear: both;
+	background: #000;
+}
+
+.list_item h2 {
+	padding: 10px 30px 10px 0;
+	margin: 0;
+}
+
+.list_item img {
+	float: left;
+	margin-right: 10px;
+}
+
+.list_item .show_button {
+	float: right;
+	margin: 0 10px;
+	color:#FFF;
+	border-radius: 3px;
+	font-size: 14px;
+	padding: 5px 30px;
+}
+
+.list_item .show_button:hover {
+    background:#c80202;
+	text-decoration: none;
+}
+
+/* @group */
 
 /* @group DETAIL FILMU */
 

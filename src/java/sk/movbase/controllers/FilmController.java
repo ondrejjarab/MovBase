@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import sk.movbase.constants.PhotoSize;
 import sk.movbase.jpaControllers.FilmJpaController;
@@ -37,20 +38,27 @@ import sk.movbase.models.User;
 @RequestMapping("/movies")
 public class FilmController {
     
-   
+    
+	
     @RequestMapping(method=RequestMethod.GET)
-    public String index(ModelMap model) {
+    public String index(ModelMap model, @RequestParam(value="page", required=false) Integer page, @RequestParam(value="genre", required=false) Integer genre) {
+		Integer items_per_page = 50;
         FilmJpaController fJpa = new FilmJpaController(Persistence.createEntityManagerFactory("MovBasePU"));
-        model.addAttribute("movies", fJpa.findFilmEntities());
+		if(page==null || page<1 || page>fJpa.getFilmCount()/items_per_page) page = 1;
+		Integer from = (page-1)*items_per_page;
+        model.addAttribute("movies", fJpa.findFilmEntities(false, items_per_page, from, 0, 1, ""));
+		model.addAttribute("menu_filmy", true); 
+		model.addAttribute("tinyPhoto", PhotoSize.TINY);
         return "film/index";
     }
-    
+     
     @RequestMapping("{id}")
     public String show(@PathVariable int id, HttpServletRequest request, ModelMap model) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MovBasePU");
         FilmJpaController fJpa = new FilmJpaController(emf);
         Film film = fJpa.findFilm(id);
         model.addAttribute("movie", film); 
+        model.addAttribute("menu_filmy", true); 
 		model.addAttribute("tinyPhoto", PhotoSize.TINY);
 		model.addAttribute("smallPhoto", PhotoSize.SMALL);
 		model.addAttribute("bigPhoto", PhotoSize.BIG);
@@ -68,6 +76,7 @@ public class FilmController {
         list.add("seriál");
         model.addAttribute("film", new Film());
         model.addAttribute("types", list);
+		model.addAttribute("menu_filmy", true); 
         return new ModelAndView("film/new", "film", new Film());
     }
     

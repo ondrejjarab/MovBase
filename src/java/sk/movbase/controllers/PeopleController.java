@@ -32,6 +32,7 @@ public class PeopleController {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MovBasePU");
         UserJpaController uJpa = new UserJpaController(emf);
         model.addAttribute("people", uJpa.findUserEntities());
+		model.addAttribute("menu_osobnosti", true); 
         return "people/index";
     }
     
@@ -45,6 +46,7 @@ public class PeopleController {
 		model.addAttribute("smallPhoto", PhotoSize.SMALL);
 		model.addAttribute("bigPhoto", PhotoSize.BIG);
 		model.addAttribute("descriptionCharacters", 200);
+		model.addAttribute("menu_osobnosti", true); 
         return "people/show";
     }
 

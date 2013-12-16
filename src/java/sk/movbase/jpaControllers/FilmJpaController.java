@@ -18,6 +18,8 @@ import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Order;
 import javax.transaction.UserTransaction;
 import sk.movbase.jpaControllers.exceptions.IllegalOrphanException;
 import sk.movbase.jpaControllers.exceptions.NonexistentEntityException;
@@ -319,12 +321,26 @@ public class FilmJpaController implements Serializable {
     public List<Film> findFilmEntities(int maxResults, int firstResult) {
         return findFilmEntities(false, maxResults, firstResult);
     }
+	
+	private List<Film> findFilmEntities(boolean all, int maxResults, int firstResult) {
+        return this.findFilmEntities(all, maxResults, firstResult, 0, 0, "");
+    }
 
-    private List<Film> findFilmEntities(boolean all, int maxResults, int firstResult) {
+    public List<Film> findFilmEntities(boolean all, int maxResults, int firstResult, int orderby, int genre, String search) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Film.class));
+			cq.select(cq.from(Film.class));
+			Order order;
+//			switch(genre) {
+//				default:
+//					cq.where(em.getCriteriaBuilder().equal(cq.from(Film.class).join("genreCollection").get("zanerId"), genre)).distinct(true);
+//			}
+			switch(orderby) {
+				default: 
+					order = em.getCriteriaBuilder().asc(cq.from(Film.class).get("nazov"));
+			}
+            cq.orderBy(order);
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
