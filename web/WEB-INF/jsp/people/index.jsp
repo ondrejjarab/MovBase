@@ -8,7 +8,7 @@
 					<img src="${person.getPhotoURL(tinyPhoto)}" class="photo_tiny" alt="${person.getMeno()}">
 					<h2>${person.getMeno()}</h2>
 					${person.getTyp().getNazov()}
-					<a class="show_button" href="${movie.getProfileURL()}">Zobraziť</a>
+					<a class="show_button" href="${person.getProfileURL()}">Zobraziť</a>
 					<div class="clear"></div>
 				</div>
                 
@@ -37,7 +37,7 @@
 	<select name="profession">
 		<option value="0">Všetky</option>
 		<c:forEach var="one_profession" items="${professions}">
-			<option value="${one_profession.getProfessionId()}"<c:if test="${profession==one_profession.getProfessionId()}"> selected="selected"</c:if>>${one_profession.getNazov()}</option>
+			<option value="${one_profession.getProfesiaId()}"<c:if test="${profession==one_profession.getProfesiaId()}"> selected="selected"</c:if>>${one_profession.getNazov()}</option>
 		</c:forEach>
 	</select></p>
 	<p>

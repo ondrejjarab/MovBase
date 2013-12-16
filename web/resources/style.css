@@ -3,6 +3,7 @@
 .center { text-align: center; }
 .invisible { display: none; }
 .clear { clear: both; }
+.relative { position: relative; }
 .photo_tiny { width: 50px; }
 .photo_small { width: 230px; }
 
@@ -63,6 +64,7 @@ ul#menu  li a
     color:#FFF;
     text-decoration:none;
     padding: 5px 15px 5px 15px;
+	margin: 0 5px;
 }
 ul#menu  li a:hover
 {
@@ -138,10 +140,11 @@ button{
 	margin-bottom: 5px;
 	font-size: 22px;
 	line-height: 26px;
+	width: 500px;
 	position: relative;
 }
 
-#main_animation #animation_controller .controller_unit .show_button {
+#main_animation #animation_controller .show_button {
 	display: block;
 	position: absolute;
 	top: 10px;
@@ -152,7 +155,7 @@ button{
 	padding: 5px 30px;
 }
 
-#main_animation #animation_controller .controller_unit .show_button:hover {
+#main_animation #animation_controller .show_button:hover {
 	background:#c80202;
 	text-decoration: none;
 }

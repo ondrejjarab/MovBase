@@ -329,7 +329,7 @@ public class FilmJpaController implements Serializable {
     }
 	
 	private List<Film> findFilmEntities(boolean all, int maxResults, int firstResult) {
-        return this.findFilmEntities(all, maxResults, firstResult, 0, 0, "");
+        return this.findFilmEntities(all, maxResults, firstResult, 0, 0, ""); 
     }
 
 	
