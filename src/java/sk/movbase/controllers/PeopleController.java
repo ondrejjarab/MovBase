@@ -6,8 +6,6 @@
 
 package sk.movbase.controllers;
 
-import java.beans.PropertyEditorSupport;
-import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -18,14 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import sk.movbase.constants.PhotoSize;
 import sk.movbase.jpaControllers.CountryJpaController;
@@ -54,10 +48,16 @@ public class PeopleController {
     }
     
     @RequestMapping("{id}")
-    public String show(@PathVariable int id, ModelMap model) {
+    public String show(@PathVariable int id, ModelMap model, HttpServletRequest request) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MovBasePU");
         PeopleJpaController pJpa = new PeopleJpaController(emf);
         People person = pJpa.findPeople(id);
+        UserJpaController uJpa = new UserJpaController(Persistence.createEntityManagerFactory("MovBasePU"));
+        User user = null;
+        if (request.getSession().getAttribute("userId") != null) {
+        user = uJpa.findUser((Integer) request.getSession().getAttribute("userId"));
+        }
+        model.addAttribute("user", user);
         model.addAttribute("actor", person);
         model.addAttribute("tinyPhoto", PhotoSize.TINY);
 		model.addAttribute("smallPhoto", PhotoSize.SMALL);

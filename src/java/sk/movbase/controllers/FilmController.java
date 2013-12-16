@@ -50,6 +50,12 @@ public class FilmController {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MovBasePU");
         FilmJpaController fJpa = new FilmJpaController(emf);
         Film film = fJpa.findFilm(id);
+        UserJpaController uJpa = new UserJpaController(Persistence.createEntityManagerFactory("MovBasePU"));
+        User user = null;
+        if (request.getSession().getAttribute("userId") != null) {
+        user = uJpa.findUser((Integer) request.getSession().getAttribute("userId"));
+        }
+        model.addAttribute("user", user);
         model.addAttribute("movie", film); 
 		model.addAttribute("tinyPhoto", PhotoSize.TINY);
 		model.addAttribute("smallPhoto", PhotoSize.SMALL);

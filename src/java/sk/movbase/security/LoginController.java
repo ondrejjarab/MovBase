@@ -158,7 +158,7 @@ public class LoginController {
         if (user != null) {
             return user;
         } else {
-            user = new User(fbId, (String) data.remove("name"), (String) data.remove("email"), new Date());
+            user = new User(fbId, (String) data.remove("name"), (String) data.remove("email"), new Date(), "u");
             try {
                 uJpa.create(user);
             } catch (Exception ex) {
