@@ -7,6 +7,7 @@
 package sk.movbase.models;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -82,6 +83,10 @@ public class Comment implements Serializable {
     public Date getDatumPridania() {
         return datumPridania;
     }
+	
+	public String getFormattedDatum() {
+		return new SimpleDateFormat("dd. MM. yyyy").format(this.getDatumPridania());
+	}
 
     public void setDatumPridania(Date datumPridania) {
         this.datumPridania = datumPridania;
