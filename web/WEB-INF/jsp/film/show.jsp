@@ -48,7 +48,7 @@
 						<c:forEach var="one_comment" items="${movie.getCommentCollection()}" varStatus="loopCounter" >
 							<div class="one_comment">
 								<a href="https://www.facebook.com/profile.php?id=${one_comment.getAutorId().getFbId()}">${one_comment.getAutorId().getMeno()}</a> (${one_comment.getFormattedDatum()}):<br>
-								${comment.getKomentar()}<br>
+								${one_comment.getKomentar()}<br>
 								<c:if test="${one_comment.getHodnotenie() != null}"><strong>Hodnotenie:</strong> ${one_comment.getHodnotenie()}/5</c:if>
 							</div>
 						</c:forEach>

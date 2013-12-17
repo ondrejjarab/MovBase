@@ -339,7 +339,7 @@ public class FilmJpaController implements Serializable {
 			CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery cq = cb.createQuery();
 			Root<Film> film_root = cq.from(Film.class);
-			cq.select(cq.from(Film.class));
+			cq.select(film_root);
 			Order order;
 			
 			// TODO: implementovat vyhladavanie na zaklade zanru
@@ -348,10 +348,9 @@ public class FilmJpaController implements Serializable {
 				//cq.where(predicate).distinct(true);
 			}
 			
-			// TODO: implementovat hladanie podla klucoveho slova z nazvu
 			if(search!=null && search.length()>0) {
-				//Predicate predicate;
-				//cq.where(predicate);
+				Predicate predicate = cb.like(film_root.get(Film_.nazov), "%"+search+"%");
+				cq.where(predicate);
 			}
 			
 			switch(orderby) {
