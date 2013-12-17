@@ -45,22 +45,41 @@
 						<p class="center">Zatiaľ neboli pridané žiadne komentáre.</p>
 					</c:when>
 					<c:otherwise>
-						<c:forEach var="comment" items="${movie.getCommentCollection()}" varStatus="loopCounter" >
-                                                    <p class="center">${comment.getKomentar()}</p>
+						<c:forEach var="one_comment" items="${movie.getCommentCollection()}" varStatus="loopCounter" >
+							<div class="one_comment">
+								<a href="https://www.facebook.com/profile.php?id=${one_comment.getAutorId().getFbId()}">${one_comment.getAutorId().getMeno()}</a> (${one_comment.getFormattedDatum()}):<br>
+								${comment.getKomentar()}<br>
+								<c:if test="${one_comment.getHodnotenie() != null}"><strong>Hodnotenie:</strong> ${one_comment.getHodnotenie()}/5</c:if>
+							</div>
 						</c:forEach>
 					</c:otherwise>
 				</c:choose>
-                                 <c:if test="${comment.getHodnotenie() == null}">
+                <c:if test="${comment.getHodnotenie() == null}">
                                 <form:form method="POST" action="/movie/${movie.getFilmId()}/comments" modelAttribute="comment">
-                                    <form:label path="komentar">Tvoj komentár</form:label>
-                                    <form:textarea path="komentar" rows="3" cols="99" />
-               <h3>Ohodnoť film</h3>
-                                    <form:radiobutton path="hodnotenie" value="1"/>Nedá sa pozerať
-                                    <form:radiobutton path="hodnotenie" value="2"/>Slabé
-                                    <form:radiobutton path="hodnotenie" value="2"/>Môže byť
-                                    <form:radiobutton path="hodnotenie" value="4"/>Dobré
-                                    <form:radiobutton path="hodnotenie" value="5"/>Veľmi dobré
-                                    <input type="submit" value="Hodnotiť"/>
+                                    
+               <h2>Ohodnoť film</h2>
+			   <table class="add_table">
+				   <tr>
+					   <td><form:label path="komentar">Tvoj komentár</form:label>
+                                    </td>
+					   <td><form:textarea path="komentar" rows="3" cols="99" class="long" /></td>
+				   </tr><tr><td>Hodnotenie:</td>
+					   <td>
+						   <form:radiobutton path="hodnotenie" value="1"/>Nedá sa pozerať &nbsp;&nbsp;&nbsp;
+							<form:radiobutton path="hodnotenie" value="2"/>Slabé &nbsp;&nbsp;&nbsp;
+							<form:radiobutton path="hodnotenie" value="2"/>Môže byť &nbsp;&nbsp;&nbsp;
+							<form:radiobutton path="hodnotenie" value="4"/>Dobré &nbsp;&nbsp;&nbsp;
+							<form:radiobutton path="hodnotenie" value="5"/>Veľmi dobré
+						   
+					   </td>
+					   
+				   </tr>	
+				   <tr>
+					   <td></td>
+					   <td><button type="submit">Odoslať</button></td>
+				   </tr>				   
+			   </table>
+                                   
                                 </form:form>
                                 </c:if>
                                 <c:if test="${comment.getHodnotenie() != null}">

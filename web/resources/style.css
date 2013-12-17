@@ -81,7 +81,7 @@ ul#menu  li#active a
 
 
 
-input, textarea {		
+input[type=text], textarea {		
 	width:150px;
 	height: 30px;
 	line-height: 30px;
@@ -97,6 +97,8 @@ textarea {
 	height: 90px;
 	line-height: 18px;
 }
+
+textarea.long { width: 500px;}
 #menu li input {
 	
 	margin-left: 25px;
@@ -372,6 +374,13 @@ button{
 	clear: both;
 	border: 1px solid #fff;
 	margin: 20px 40px;
+	padding: 10px;
+}
+
+.one_comment {
+	padding: 20px;
+	font-size: 14px;
+	border-bottom: 1px solid #9d9d9d;
 }
 
 .comments h2 {
