@@ -14,6 +14,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import sk.movbase.constants.OrderFilmTypes;
 import sk.movbase.constants.PhotoSize;
 import sk.movbase.jpaControllers.FilmJpaController;
 import sk.movbase.jpaControllers.UserJpaController;
@@ -32,7 +33,7 @@ public class IndexController {
     @RequestMapping(method=RequestMethod.GET)
     public String index(ModelMap model, HttpServletRequest request) {
         FilmJpaController fJpa = new FilmJpaController(Persistence.createEntityManagerFactory("MovBasePU"));
-        model.addAttribute("movies", fJpa.findFilmEntities(5,0));
+        model.addAttribute("movies", fJpa.findFilmEntities(false, 5, 0, OrderFilmTypes.PRIDANY_DESC, 0, ""));
         model.addAttribute("smallPhoto", PhotoSize.SMALL);
         UserJpaController uJpa = new UserJpaController(Persistence.createEntityManagerFactory("MovBasePU"));
         User user = null;

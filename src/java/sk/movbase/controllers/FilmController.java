@@ -115,13 +115,20 @@ public class FilmController {
     
 	
 	@RequestMapping(value = "/new", method = RequestMethod.GET) 
-    public ModelAndView newMovie(ModelMap model) {
+    public ModelAndView newMovie(HttpServletRequest request, ModelMap model) {
         List<String> list = new ArrayList<String>();
         list.add("film");
         list.add("seriál");
         model.addAttribute("film", new Film()); 
         model.addAttribute("types", list);
 		model.addAttribute("menu_filmy", true); 
+		UserJpaController uJpa = new UserJpaController(Persistence.createEntityManagerFactory("MovBasePU"));
+        User user = null;
+        if (request.getSession().getAttribute("userId") != null) {
+			user = uJpa.findUser((Integer) request.getSession().getAttribute("userId"));
+        }
+		model.addAttribute("user", user);
+		model.addAttribute("session", request.getSession());
         return new ModelAndView("film/new", model);
     }
     

@@ -17,6 +17,7 @@
             </c:forEach>
 </div>
 <form method="get" action="/movies" class="filter_form">
+	<a href="/movies/new" class="show_button">Pridať nový film</a>
 	<p class="center">
 		<a href="/movies">&lt;&lt;</a>
 		<c:if test="${actualpage-1>0}"><a href="${paging_url}page=${actualpage-1}">&lt;</a></c:if>
