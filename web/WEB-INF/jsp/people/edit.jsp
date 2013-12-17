@@ -27,39 +27,20 @@
                         <h1>${movie.getNazov()} / <h2>zmena údajov</h2></h1>
                         <div class="right_col">
                             
-                            <form:form method="POST" action="/movies/${movie.getFilmId()}/update" modelAttribute="movie">
+                            <form:form method="POST" action="/people/${person.getOsobnostId()}/update" modelAttribute="person">
    <table>
-       <form:hidden path="filmId"></form:hidden>
+       <form:hidden path="osobnostId"></form:hidden>
              
 
     <tr>
-        <td><form:label path="nazov" >Názov</form:label></td>
-        <td><form:input path="nazov" size="1000" maxlength="1000"/></td>
+        <td><form:label path="meno" >Meno</form:label></td>
+        <td><form:input path="meno" /></td>
     </tr>
     <tr>
         <td><form:label path="popis">Popis</form:label></td>
         <td><form:input path="popis" /></td>
     </tr>
-    <tr>
-        <td><form:label path="originalnyNazov">Originálny názov</form:label></td>
-        <td><form:input path="originalnyNazov" /></td>
-    </tr>
-    <tr>
-        <td><form:label path="rokVydania">Rok vydania</form:label></td>
-        <td><form:input path="rokVydania" /></td>
-    </tr>
-    <tr>
-        <td><form:label path="minutaz">Minutaz</form:label></td>
-        <td><form:input path="minutaz" /></td>
-    </tr>
-    <tr>
-        <td><form:label path="pocetCasti">Pocet častí</form:label></td>
-        <td><form:input path="pocetCasti" /></td>
-    </tr>
-    <tr>
-        <td><form:label path="typ">Typ</form:label></td>
-        <td><form:select path="typ" items="${types}"/></td>
-    </tr>
+   
     
     <tr>
         <td colspan="2">
@@ -73,3 +54,4 @@
 		</div>
     </body>
 </html>
+

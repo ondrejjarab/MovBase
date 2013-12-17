@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -105,6 +106,40 @@ public class PeopleController {
 		model.addAttribute("descriptionCharacters", 200);
 		model.addAttribute("menu_osobnosti", true); 
         return "people/show";
+    }
+    
+     @RequestMapping(value = "{id}/edit", method = RequestMethod.GET) 
+    public ModelAndView editPerson(@PathVariable int id, ModelMap model,
+            HttpServletRequest request, HttpServletResponse response) {
+        User user = null;
+        if (request.getSession().getAttribute("userId") != null) {
+        UserJpaController uJpa = new UserJpaController(Persistence.createEntityManagerFactory("MovBasePU"));
+        user = uJpa.findUser((Integer) request.getSession().getAttribute("userId"));
+        } else {             //kontrola ci je prihlaseny
+            try {
+            response.sendRedirect("people/" + id);
+            return null;
+            } catch (IOException ex) {
+                Logger.getLogger(FilmController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        if (!user.isAdmin()) {try {
+            //editovat moze len administrator
+            response.sendRedirect("/people/" + id);
+            return null;
+            } catch (IOException ex) {
+                Logger.getLogger(FilmController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        PeopleJpaController pJpa = new PeopleJpaController(Persistence.createEntityManagerFactory("MovBasePU"));
+        People person = pJpa.findPeople(id);
+        
+        model.addAttribute("person", person);
+        model.addAttribute("user", user);
+        return new ModelAndView("people/edit", model);
+         
     }
    
 
@@ -252,6 +287,31 @@ public class PeopleController {
             Logger.getLogger(PeopleController.class.getName()).log(Level.SEVERE, null, ex);
         }
   }
+  
+  @RequestMapping(value = "{id}/update", method = RequestMethod.POST)
+   public String update(ModelMap model, 
+           HttpServletRequest request, HttpServletResponse response) {
+        try {
+            response.sendRedirect("/people");
+        } catch (IOException ex) {
+            Logger.getLogger(PeopleController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    return null;
+   }
+   
+   @RequestMapping(value = "{id}/delete", method = RequestMethod.GET)
+   public String destroy(@PathVariable int id,
+           HttpServletRequest request, HttpServletResponse response) {
+       
+        try {
+            response.sendRedirect("/");
+        } catch (IOException ex) {
+            Logger.getLogger(PeopleController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    return null;
+   }
     
     
 }

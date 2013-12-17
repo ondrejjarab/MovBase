@@ -206,10 +206,68 @@ public class FilmController {
     return null;
    }
    
+   @RequestMapping(value = "{id}/update", method = RequestMethod.POST)
+   public String update(@ModelAttribute("SpringWeb")Film film, ModelMap model, 
+           HttpServletRequest request, HttpServletResponse response) {
+    
+      if (request.getSession().getAttribute("userId") == null) {
+           try {
+               response.sendRedirect("/");//ak nieje prihlaseny presmeruje ho
+               return null;
+           } catch (IOException ex) {
+               Logger.getLogger(FilmController.class.getName()).log(Level.SEVERE, null, ex);
+           }
+       }
+       
+       System.out.println(film.getFilmId());
+       if (!isValid(film)) {
+          try {
+              response.sendRedirect("/movies");
+          } catch (IOException ex) {
+              Logger.getLogger(FilmController.class.getName()).log(Level.SEVERE, null, ex);
+          }
+            
+       }
+        User autorZaznamu = null;
+        UserJpaController uJpa = new UserJpaController(Persistence.createEntityManagerFactory("MovBasePU"));
+        autorZaznamu = uJpa.findUser(((int) request.getSession().getAttribute("userId")));
+        
+        film.setAutorId(autorZaznamu);//povinne udaje
+        film.setSchvaleny("1");//potom zmenit podla typu prihláseného
+        
+        FilmJpaController fJpa = new FilmJpaController(Persistence.createEntityManagerFactory("MovBasePU"));
+        try {
+            fJpa.edit(film);    
+        } catch (Exception ex) {
+            Logger.getLogger(FilmController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            response.sendRedirect("/movies");
+        } catch (IOException ex) {
+            Logger.getLogger(FilmController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    return null;
+   }
+   
    private boolean isValid(Film film) {
        return !(film.getNazov().length() == 0 || film.getPopis().length() == 0);//treba porovnavat na dlzku nie na null
            
    }
+   
+   @RequestMapping(value = "{id}/delete", method = RequestMethod.GET)
+   public String destroy(@PathVariable int id,
+           HttpServletRequest request, HttpServletResponse response) {
+       
+        try {
+            response.sendRedirect("/");
+        } catch (IOException ex) {
+            Logger.getLogger(PeopleController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    return null;
+   }
+    
 
     
     
