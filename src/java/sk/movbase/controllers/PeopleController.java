@@ -177,11 +177,11 @@ public class PeopleController {
         
         this.savePhotos(fotografia, photoId);
         try {
-            response.sendRedirect("/");
+            response.sendRedirect("/people");
         } catch (IOException ex) {
             Logger.getLogger(PeopleController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    return new ModelAndView("index");
+    return null;
    }
     
     @RequestMapping("/edit")

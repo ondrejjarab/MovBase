@@ -17,6 +17,7 @@ import javax.persistence.Persistence;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -125,10 +126,38 @@ public class FilmController {
         return new ModelAndView("film/new", model);
     }
     
-    
-    public ModelAndView editMovie() {
-        return null;
-    
+    @RequestMapping(value = "{id}/edit", method = RequestMethod.GET) 
+    public ModelAndView editMovie(@PathVariable int id, ModelMap model,
+            HttpServletRequest request, HttpServletResponse response) {
+        User user = null;
+        if (request.getSession().getAttribute("userId") != null) {
+        UserJpaController uJpa = new UserJpaController(Persistence.createEntityManagerFactory("MovBasePU"));
+        user = uJpa.findUser((Integer) request.getSession().getAttribute("userId"));
+        } else {             //kontrola ci je prihlaseny
+            try {
+            response.sendRedirect("movies/" + id);
+            return null;
+            } catch (IOException ex) {
+                Logger.getLogger(FilmController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        if (!user.isAdmin()) {try {
+            //editovat moze len administrator
+            response.sendRedirect("/movies/" + id);
+            return null;
+            } catch (IOException ex) {
+                Logger.getLogger(FilmController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        FilmJpaController fJpa = new FilmJpaController(Persistence.createEntityManagerFactory("MovBasePU"));
+        Film film = fJpa.findFilm(id);
+        
+        model.addAttribute("movie", film);
+        model.addAttribute("user", user);
+        return new ModelAndView("film/edit", model);
+         
     }
     
    @RequestMapping(method = RequestMethod.POST)
@@ -161,8 +190,13 @@ public class FilmController {
         } catch (Exception ex) {
             Logger.getLogger(FilmController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-    return new ModelAndView("index");
+        try {
+            response.sendRedirect("/movies");
+        } catch (IOException ex) {
+            Logger.getLogger(FilmController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    return null;
    }
    
    private boolean isValid(Film film) {
