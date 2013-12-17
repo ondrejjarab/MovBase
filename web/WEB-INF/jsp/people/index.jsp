@@ -15,6 +15,7 @@
             </c:forEach>
 </div>
 <form method="get" action="/people" class="filter_form">
+	<a href="/people/new" class="show_button">Pridať osobnosť</a>
 	<p class="center">
 		<a href="${paging_url}page=1">&lt;&lt;</a>
 		<c:if test="${actualpage-1>0}"><a href="${paging_url}page=${actualpage-1}">&lt;</a></c:if>

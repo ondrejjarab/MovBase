@@ -1,71 +1,46 @@
-<%-- 
-    Document   : new
-    Created on : 15.12.2013, 14:42:57
-    Author     : Ondrej
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ include file="/WEB-INF/jsp/components/head.jsp" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-  <head>
-	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-	<meta name="description" content="">
-	<meta name="keywords" content="">
-	<meta name="robots" content="index,follow">
-	<link rel="stylesheet" type="text/css" href="/resources/style.css">
-	<link rel="shortcut icon" href="/resources/img/favicon.gif">
-	<script type="text/javascript" src="/resources/js/jquery.js"></script>
-	<script type="text/javascript" src="/resources/js/jquery.lightbox-0.5.min.js"></script>
-	<script type="text/javascript" src="/resources/js/scripts.js"></script>
-	<title>Movied.com</title>
-  </head>
-    <body>
-		<div id="holder">
-			<p class="center"><img src="/resources/img/logo.png" alt="logo" /></p>
-                        <h2>Nový film</h2>
-                        <div class="right_col">
-                            <form:form method="POST" action="/movies" modelAttribute="film">
-   <table>
+                        <h2 class="add_new_headline">Pridanie nového filmu</h2>
+<form:form method="POST" action="/movies" modelAttribute="film">
+   <table class="add_table">
     <tr>
-        <td><form:label path="nazov">nazov</form:label></td>
+        <td><form:label path="nazov">Názov:*</form:label></td>
         <td><form:input path="nazov" /></td>
     </tr>
     <tr>
-        <td><form:label path="popis">Popis</form:label></td>
-        <td><form:input path="popis" /></td>
+        <td><form:label path="popis">Popis:</form:label></td>
+        <td><form:textarea path="popis" /></td>
     </tr>
     <tr>
-        <td><form:label path="originalnyNazov">Originálny názov</form:label></td>
+        <td><form:label path="originalnyNazov">Originálny názov:</form:label></td>
         <td><form:input path="originalnyNazov" /></td>
     </tr>
     <tr>
-        <td><form:label path="rokVydania">Rok vydania</form:label></td>
+        <td><form:label path="rokVydania">Rok vydania:</form:label></td>
         <td><form:input path="rokVydania" /></td>
     </tr>
     <tr>
-        <td><form:label path="minutaz">Minutaz</form:label></td>
+        <td><form:label path="minutaz">Minutáž:</form:label></td>
         <td><form:input path="minutaz" /></td>
     </tr>
     <tr>
-        <td><form:label path="pocetCasti">Pocet častí</form:label></td>
+        <td><form:label path="pocetCasti">Počet častí:</form:label></td>
         <td><form:input path="pocetCasti" /></td>
     </tr>
     <tr>
-        <td><form:label path="typ">Typ</form:label></td>
+        <td><form:label path="typ">Typ:</form:label></td>
         <td><form:select path="typ" items="${types}"/></td>
     </tr>
     
     <tr>
-        <td colspan="2">
-            <input type="submit" value="Submit"/>
+		<td></td>
+        <td>
+            <button type="submit">Odoslať</button>
         </td>
     </tr>
 </table>  
 </form:form>
-			</div>
 			
-		</div>
-    </body>
-</html>
+<%@ include file="/WEB-INF/jsp/components/foot.jsp" %>
