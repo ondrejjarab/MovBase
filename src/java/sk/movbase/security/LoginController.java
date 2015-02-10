@@ -41,7 +41,7 @@ public class LoginController {
     private static final String SCOPE = "email,offline_access,user_about_me";
     private static final String REDIRECT_URI = "http://localhost:8080/";
     private static final String CLIENT_ID = "227583140736531";
-    private static final String APP_SECRET = "97d06a579f6798e0ed29a32676e80960";
+    private static final String APP_SECRET = "...";
     private static final String DIALOG_OAUTH = "https://www.facebook.com/dialog/oauth";
     private static final String ACCESS_TOKEN = "https://graph.facebook.com/oauth/access_token";
     private static final String USER_INFO_FB = "https://graph.facebook.com/me?access_token=";
